@@ -53,7 +53,7 @@ const Main = () => {
               <div className="relative flex h-16 items-center justify-between">
                 <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
                   {/* Mobile menu button */}
-                  <Disclosure.Button className="relative inline-flex items-center justify-center rounded-full p-1 text-gray-400 hover:bg-[#246CF7] hover:text-white">
+                  <Disclosure.Button className="relative inline-flex items-center justify-center rounded-full p-1 text-gradient-yellow-900 hover:bg-gradient-yellow-900 hover:text-white">
                     <span className="absolute -inset-0.5" />
                     <span className="sr-only">Open main menu</span>
                     {open ? <HiMiniBars3CenterLeft /> : <HiMiniBars3 />}

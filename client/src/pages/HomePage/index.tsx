@@ -92,12 +92,11 @@ const Main = () => {
         className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50 sm:h-screen md:h-screen"
       >
         <div className="flex flex-col items-center justify-center">
-          <img src={Text_01} alt="" />
+          <img src={Text_01} alt="" className="mb-2 scale-75" />
+          <img className="scale-75 justify-center" src={Text_02} alt="" />
           <br></br>
-          <img className="jsutify-center" src={Text_02} alt="" />
-          <br></br>
-          <div className="grid  w-screen md:grid-cols-3 ">
-            <div className="flex items-center justify-center">
+          <div className="grid w-screen md:grid-cols-3">
+            <div className="flex items-center justify-center 2xl:translate-y-40">
               <DeliveryCards
                 imageSrc={Delivery_01}
                 title="Best Quality"
@@ -105,7 +104,7 @@ const Main = () => {
                 buttonText="Read More"
               />
             </div>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center 2xl:-translate-x-28 2xl:translate-y-10">
               <DeliveryCards
                 imageSrc={Delivery_02}
                 title="Easy to order"
@@ -113,7 +112,7 @@ const Main = () => {
                 buttonText="Read More"
               />
             </div>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center 2xl:-translate-x-40 2xl:translate-y-40">
               <DeliveryCards
                 imageSrc={Delivery_03}
                 title="Fast Delivery"
