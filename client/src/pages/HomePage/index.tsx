@@ -89,7 +89,7 @@ const Main = () => {
           backgroundImage: `url(${Back_02})`,
           backgroundSize: "cover",
         }}
-        className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50 sm:h-screen md:h-screen"
+        className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50 md:h-screen"
       >
         <div className="flex flex-col items-center justify-center">
           <img src={Text_01} alt="" className="mb-2 scale-75" />
@@ -130,11 +130,14 @@ const Main = () => {
           backgroundImage: `url(${Back_03})`,
           backgroundSize: "cover",
         }}
-        className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50 sm:h-screen md:h-screen"
+        className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50 md:h-screen"
       >
         <div className="flex flex-col items-center justify-center">
-          <img src={OurMenu} alt="" />
-          <br></br>
+          <img src={OurMenu} alt="" className="scale-75" />
+          <br />
+
+          {/* from here */}
+
           <ProductBrowsingComponent />
         </div>
       </div>

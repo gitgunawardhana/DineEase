@@ -1,5 +1,6 @@
-import React, { useContext, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 import { ProviderContext } from "../Provider";
 
 interface Product {
@@ -16,138 +17,143 @@ interface ProductBrowsingComponentProps {
 const ProductBrowsingComponent: React.FC<ProductBrowsingComponentProps> = ({
   products,
 }) => {
-  const viewerRef = useRef<HTMLDivElement>(null);
-  const [currentPage, setCurrentPage] = useState(0);
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+  };
 
-  const scrollLeft = () => {
-    if (viewerRef.current) {
-      viewerRef.current.scrollBy({
-        left: -300,
-        behavior: "smooth",
-      });
-      setCurrentPage(currentPage - 1);
+  const data = [
+    {
+      name: "John Morgan1",
+      img: "https://t3.ftcdn.net/jpg/03/67/97/90/360_F_367979072_UdBgmIp2RuFgLsbruOMBVmruR6jCDqfX.jpg",
+      review: "Lorem ipsum dolor sit amet, cor",
+    },
+    {
+      name: "John Morgan2",
+      img: "https://t3.ftcdn.net/jpg/03/67/97/90/360_F_367979072_UdBgmIp2RuFgLsbruOMBVmruR6jCDqfX.jpg",
+      review: "Lorem ipsum dolor sit amet, cor",
+    },
+    {
+      name: "John Morgan3",
+      img: "https://t3.ftcdn.net/jpg/03/67/97/90/360_F_367979072_UdBgmIp2RuFgLsbruOMBVmruR6jCDqfX.jpg",
+      review: "Lorem ipsum dolor sit amet, cor",
+    },
+    {
+      name: "John Morgan4",
+      img: "https://t3.ftcdn.net/jpg/03/67/97/90/360_F_367979072_UdBgmIp2RuFgLsbruOMBVmruR6jCDqfX.jpg",
+      review: "Lorem ipsum dolor sit amet, cor",
+    },
+    {
+      name: "John Morgan5",
+      img: "https://t3.ftcdn.net/jpg/03/67/97/90/360_F_367979072_UdBgmIp2RuFgLsbruOMBVmruR6jCDqfX.jpg",
+      review: "Lorem ipsum dolor sit amet, cor",
+    },
+    {
+      name: "John Morgan6",
+      img: "https://t3.ftcdn.net/jpg/03/67/97/90/360_F_367979072_UdBgmIp2RuFgLsbruOMBVmruR6jCDqfX.jpg",
+      review: "Lorem ipsum dolor sit amet, cor",
+    },
+    {
+      name: "John Morgan7",
+      img: "https://t3.ftcdn.net/jpg/03/67/97/90/360_F_367979072_UdBgmIp2RuFgLsbruOMBVmruR6jCDqfX.jpg",
+      review: "Lorem ipsum dolor sit amet, cor",
+    },
+  ];
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [slidesToShow, setSlidesToShow] = useState(3);
+  const [endPoint, setEndPoint] = useState(1);
+
+  const updateSlidesToShow = () => {
+    const width = window.innerWidth;
+    if (width < 640) {
+      setSlidesToShow(1);
+      setEndPoint(1);
+    } else if (width < 1024) {
+      setSlidesToShow(2);
+      setEndPoint(2);
+    } else {
+      setSlidesToShow(3);
+      setEndPoint(3);
     }
   };
 
-  const scrollRight = () => {
-    if (viewerRef.current) {
-      viewerRef.current.scrollBy({
-        left: 300,
-        behavior: "smooth",
-      });
-      setCurrentPage(currentPage + 1);
+  useEffect(() => {
+    updateSlidesToShow();
+    window.addEventListener("resize", updateSlidesToShow);
+    return () => window.removeEventListener("resize", updateSlidesToShow);
+  }, []);
+
+  const next = () => {
+    if (currentIndex < data.length - endPoint) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
+
+  const prev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
     }
   };
 
   return (
     <>
-      <div className="grid items-center md:flex md:items-center">
-        {/* Scroll left button */}
-        <button
-          className={` rounded-l p-5 focus:outline-none ${
-            currentPage === 0 ? "cursor-not-allowed opacity-50" : ""
-          }`}
-          onClick={scrollLeft}
-          disabled={currentPage === 0}
-        >
-          &lt;
-        </button>
-
-        {/* Product viewer */}
-        <div className="flex space-x-4 overflow-hidden" ref={viewerRef}>
-          {products.map((product: Product, index: number) => (
+      <div className="m-auto w-3/4">
+        <div className="relative mt-20">
+          <div className="overflow-hidden">
             <div
-              key={index}
-              className={`${
-                index === currentPage ? "scale-100" : "scale-90"
-              } w-full flex-none transform transition-transform
-              lg:w-1/3`}
+              className="flex transition-transform duration-500"
+              style={{
+                transform: `translateX(-${
+                  (100 / slidesToShow) * currentIndex
+                }%)`,
+              }}
             >
-              {/* Render your product component or content here */}
-              <div className="grid items-center justify-center rounded-md p-4">
-                <div className="flex items-center justify-center">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="h-auto w-4/6 rounded-full"
-                  />
+              {data.map((d, index) => (
+                <div
+                  key={index}
+                  className={`w-full flex-none p-2 sm:w-1/2 md:w-1/3`}
+                  style={{ minWidth: `${100 / slidesToShow}%` }}
+                >
+                  <div className="h-[450px] rounded-xl bg-white text-white">
+                    <div className="flex h-56 items-center justify-center rounded-t-xl bg-indigo-500">
+                      <img src={d.img} alt="" className="h-44 w-44" />
+                    </div>
+                    <div className="flex flex-col items-center justify-center gap-4 p-4">
+                      <p className="text-xl font-semibold text-black">
+                        {d.name}
+                      </p>
+                      <p className="text-center">{d.review}</p>
+                      <button className="rounded-xl bg-indigo-500 px-6 py-1 text-lg text-white">
+                        Read more
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <br></br>
-                <Link to={`/product/${encodeURIComponent(product.name)}`}>
-                  <p className="text-2xl font-black uppercase tracking-widest text-amber-500">
-                    {product.name}
-                  </p>
-                  <br></br>
-                </Link>
-
-                <p className="tracking-widest text-amber-100">
-                  {product.description}
-                </p>
-                <br></br>
-                <p className="text-2xl font-black uppercase -tracking-normal text-amber-500">
-                  {product.price}
-                </p>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
-
-        {/* Scroll right button */}
-        <button
-          className={`${
-            currentPage === products.length - 1
-              ? "cursor-not-allowed opacity-50"
-              : ""
-          }
-              rounded-r p-5
-          focus:outline-none`}
-          onClick={scrollRight}
-          disabled={currentPage === products.length - 1}
-        >
-          &gt;
-        </button>
-      </div>
-
-      {/* Pagination dots */}
-      <br></br>
-      <div className="grid items-center justify-center">
-        <div className="mt-2 flex space-x-2">
-          {products.map((_, index) => (
-            <>
-              <br></br>
-              <div
-                key={index}
-                className={`${
-                  index === currentPage ? "bg-black" : "bg-gray-900"
-                } h-2 w-2
-                rounded-full`}
-                onClick={() => setCurrentPage(index)}
-              ></div>
-            </>
-          ))}
+          </div>
+          <button
+            className="absolute left-0 top-1/2 -translate-y-1/2 transform bg-gray-500 p-2 text-white"
+            onClick={prev}
+          >
+            Prev
+          </button>
+          <button
+            className="absolute right-0 top-1/2 -translate-y-1/2 transform bg-gray-500 p-2 text-white"
+            onClick={next}
+          >
+            Next
+          </button>
         </div>
       </div>
     </>
   );
 };
 
-function App() {
-  // const [products, setProducts] = useState<Product[]>([]);
-
-  // const fetchData = async () => {
-  //   try {
-  //     const res = await fetch("http://localhost:8000/api/products/product");
-  //     const json = await res.json();
-  //     setProducts(json.data);
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
+function Main() {
   const { products } = useContext(ProviderContext);
 
   return (
@@ -157,4 +163,4 @@ function App() {
   );
 }
 
-export default App;
+export default Main;

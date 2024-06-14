@@ -17,12 +17,12 @@ export default {
   theme: {
     extend: {
       screens: {
-        'xs': '500px',
-        'sm': '640px',   // Small screens
-        'md': '768px',   // Medium screens
-        'lg': '1024px',  // Large screens
-        'xl': '1280px',  // Extra large screens
-        '2xl': '1536px', // 2x Extra large screens
+        xs: "500px",
+        sm: "640px", // Small screens
+        md: "768px", // Medium screens
+        lg: "1024px", // Large screens
+        xl: "1280px", // Extra large screens
+        "2xl": "1536px", // 2x Extra large screens
         // Add your custom breakpoints here
       },
       fontFamily: {
@@ -49,5 +49,9 @@ export default {
       },
     },
   },
-  plugins: [require("tailwind-scrollbar"), require("flowbite/plugin")],
+  plugins: [
+    require("tailwind-scrollbar"),
+    require("flowbite/plugin"),
+    require("daisyui"),
+  ],
 };
