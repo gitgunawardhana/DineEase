@@ -12,7 +12,7 @@ const Main = () => {
           backgroundImage: `url(${LandingPageBG})`,
           backgroundSize: "cover",
         }}
-        className="w-m -mt-[136px] flex h-screen flex-col p-5 pt-[80px] text-center text-gradient-yellow-300"
+        className="w-m mt-[0px] flex h-screen flex-col p-5 pt-[80px] text-center text-gradient-yellow-300"
       >
         <div className="grid h-screen place-items-center">
           <div>
