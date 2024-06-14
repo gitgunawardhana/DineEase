@@ -73,6 +73,7 @@ const reviews = [
 const Main = () => {
   return (
     <div>
+      {/**First Part */}
       <div
         style={{
           backgroundImage: `url(${Back_01})`,
