@@ -22,6 +22,7 @@
     "@kommunicate/kommunicate-chatbot-plugin": "^0.0.6",
     "@mui/material": "^5.14.1",
     "@mui/x-date-pickers": "^6.11.0",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "@types/react-modal": "^3.16.0",
     "@types/react-router-dom": "^5.3.3",
     "autoprefixer": "^10.4.14",

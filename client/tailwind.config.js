@@ -52,6 +52,6 @@ export default {
   plugins: [
     require("tailwind-scrollbar"),
     require("flowbite/plugin"),
-    require("daisyui"),
+    require("@tailwindcss/line-clamp"),
   ],
 };

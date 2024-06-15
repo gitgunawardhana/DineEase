@@ -138,7 +138,9 @@ const Main = () => {
 
           {/* from here */}
 
-          <ProductBrowsingComponent />
+          <div className="container !w-full">
+            <ProductBrowsingComponent />
+          </div>
         </div>
       </div>
       {/** Third part */}

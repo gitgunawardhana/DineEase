@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { ProviderContext } from "../Provider";
-
-interface Product {
-  name: string;
-  image: string;
-  description: string;
-  price: string;
-}
+import { twMerge } from "tailwind-merge";
+import { Button } from "../../base-components/Button";
+import LucideIcon from "../../base-components/LucideIcon";
+import { Icons } from "../../constants";
+import { roundToDecimal } from "../../utils";
+import { Product, ProviderContext } from "../Provider";
 
 interface ProductBrowsingComponentProps {
   products: Product[];
@@ -17,66 +16,17 @@ interface ProductBrowsingComponentProps {
 const ProductBrowsingComponent: React.FC<ProductBrowsingComponentProps> = ({
   products,
 }) => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-  };
-
-  const data = [
-    {
-      name: "John Morgan1",
-      img: "https://t3.ftcdn.net/jpg/03/67/97/90/360_F_367979072_UdBgmIp2RuFgLsbruOMBVmruR6jCDqfX.jpg",
-      review: "Lorem ipsum dolor sit amet, cor",
-    },
-    {
-      name: "John Morgan2",
-      img: "https://t3.ftcdn.net/jpg/03/67/97/90/360_F_367979072_UdBgmIp2RuFgLsbruOMBVmruR6jCDqfX.jpg",
-      review: "Lorem ipsum dolor sit amet, cor",
-    },
-    {
-      name: "John Morgan3",
-      img: "https://t3.ftcdn.net/jpg/03/67/97/90/360_F_367979072_UdBgmIp2RuFgLsbruOMBVmruR6jCDqfX.jpg",
-      review: "Lorem ipsum dolor sit amet, cor",
-    },
-    {
-      name: "John Morgan4",
-      img: "https://t3.ftcdn.net/jpg/03/67/97/90/360_F_367979072_UdBgmIp2RuFgLsbruOMBVmruR6jCDqfX.jpg",
-      review: "Lorem ipsum dolor sit amet, cor",
-    },
-    {
-      name: "John Morgan5",
-      img: "https://t3.ftcdn.net/jpg/03/67/97/90/360_F_367979072_UdBgmIp2RuFgLsbruOMBVmruR6jCDqfX.jpg",
-      review: "Lorem ipsum dolor sit amet, cor",
-    },
-    {
-      name: "John Morgan6",
-      img: "https://t3.ftcdn.net/jpg/03/67/97/90/360_F_367979072_UdBgmIp2RuFgLsbruOMBVmruR6jCDqfX.jpg",
-      review: "Lorem ipsum dolor sit amet, cor",
-    },
-    {
-      name: "John Morgan7",
-      img: "https://t3.ftcdn.net/jpg/03/67/97/90/360_F_367979072_UdBgmIp2RuFgLsbruOMBVmruR6jCDqfX.jpg",
-      review: "Lorem ipsum dolor sit amet, cor",
-    },
-  ];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slidesToShow, setSlidesToShow] = useState(3);
-  const [endPoint, setEndPoint] = useState(1);
 
   const updateSlidesToShow = () => {
     const width = window.innerWidth;
     if (width < 640) {
       setSlidesToShow(1);
-      setEndPoint(1);
     } else if (width < 1024) {
       setSlidesToShow(2);
-      setEndPoint(2);
     } else {
       setSlidesToShow(3);
-      setEndPoint(3);
     }
   };
 
@@ -87,7 +37,7 @@ const ProductBrowsingComponent: React.FC<ProductBrowsingComponentProps> = ({
   }, []);
 
   const next = () => {
-    if (currentIndex < data.length - endPoint) {
+    if (currentIndex < products.length - slidesToShow) {
       setCurrentIndex(currentIndex + 1);
     }
   };
@@ -100,7 +50,7 @@ const ProductBrowsingComponent: React.FC<ProductBrowsingComponentProps> = ({
 
   return (
     <>
-      <div className="m-auto w-3/4">
+      <div className="m-auto w-full">
         <div className="relative mt-20">
           <div className="overflow-hidden">
             <div
@@ -111,42 +61,113 @@ const ProductBrowsingComponent: React.FC<ProductBrowsingComponentProps> = ({
                 }%)`,
               }}
             >
-              {data.map((d, index) => (
-                <div
-                  key={index}
-                  className={`w-full flex-none p-2 sm:w-1/2 md:w-1/3`}
-                  style={{ minWidth: `${100 / slidesToShow}%` }}
-                >
-                  <div className="h-[450px] rounded-xl bg-white text-white">
-                    <div className="flex h-56 items-center justify-center rounded-t-xl bg-indigo-500">
-                      <img src={d.img} alt="" className="h-44 w-44" />
-                    </div>
-                    <div className="flex flex-col items-center justify-center gap-4 p-4">
-                      <p className="text-xl font-semibold text-black">
-                        {d.name}
+              {products.length > 0 &&
+                products.map((product: Product, index: number) => (
+                  <div
+                    key={index}
+                    className={`relative w-full flex-none p-2 sm:w-1/2 md:w-1/3`}
+                    style={{ minWidth: `${100 / slidesToShow}%` }}
+                  >
+                    <div className="h-auto rounded-xl text-white">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="m-auto h-48 w-48 rounded-full object-cover"
+                      />
+                      <div className="flex items-baseline justify-center gap-1 align-baseline">
+                        <h1 className=" mt-5 text-xl font-black uppercase tracking-widest text-[#FF9224]">
+                          {product.name}
+                        </h1>
+                        <LucideIcon
+                          icon={Icons.START}
+                          strokeWidth={1}
+                          fill="#24FFFF"
+                          color="#24FFFF"
+                          className="ml-2 translate-y-1"
+                        />
+                        <p className=" text-xl font-extrabold leading-relaxed text-[#24FFFF]">
+                          {roundToDecimal(product.rate)}
+                        </p>
+                      </div>
+                      <p className=" mx-auto mb-5 mt-4 line-clamp-3 min-h-[60px] max-w-[320px] overflow-hidden !bg-gradient-to-b from-gradient-yellow-100 to-gradient-yellow-900 bg-clip-text text-sm font-normal leading-relaxed text-transparent">
+                        {product.description}
                       </p>
-                      <p className="text-center">{d.review}</p>
-                      <button className="rounded-xl bg-indigo-500 px-6 py-1 text-lg text-white">
-                        Read more
-                      </button>
+                      <h1 className=" mb-4 text-xl font-black uppercase tracking-widest text-[#FF9224]">
+                        Rs. {product.price}.00
+                      </h1>
+                      <div className="m-auto flex flex-col gap-1 py-2">
+                        <Button
+                          as={NavLink}
+                          to={`/product/${encodeURIComponent(product.name)}`}
+                          className="m-auto h-12 min-w-[200px] !rounded-[10px] border border-gradient-yellow-100-15 !bg-transparent !bg-opacity-20 !px-5 !py-2 text-xs font-semibold uppercase text-black hover:text-black md:!px-5 md:py-2 md:text-sm"
+                        >
+                          <p className="!bg-gradient-to-b from-gradient-yellow-500 to-gradient-yellow-900 bg-clip-text text-transparent">
+                            Order Now
+                          </p>
+                        </Button>
+                        <Button
+                          as={NavLink}
+                          to={`/customize-page/${product.name}`}
+                          className="m-auto !mb-2 !mt-1 h-12 min-w-[200px] !rounded-[10px] border-none !bg-opacity-20 !bg-gradient-to-b from-gradient-yellow-900-6 to-gradient-yellow-900-2 !px-5 !py-2 text-xs font-semibold uppercase text-black hover:text-black md:!px-5 md:py-2 md:text-sm"
+                        >
+                          <p className="!bg-gradient-to-b from-gradient-yellow-500 to-gradient-yellow-900 bg-clip-text text-transparent">
+                            Customize Order
+                          </p>
+                        </Button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
+
           <button
-            className="absolute left-0 top-1/2 -translate-y-1/2 transform bg-gray-500 p-2 text-white"
+            className={twMerge([
+              "absolute left-0 top-1/2 -translate-y-1/2 transform p-2 text-white opacity-100",
+              currentIndex === 0 && "opacity-20",
+            ])}
             onClick={prev}
+            disabled={currentIndex === 0}
           >
-            Prev
+            <LucideIcon
+              icon={Icons.CHEVRONSLEFT}
+              strokeWidth={4}
+              color="#FF9224"
+            />
           </button>
           <button
-            className="absolute right-0 top-1/2 -translate-y-1/2 transform bg-gray-500 p-2 text-white"
+            className={twMerge([
+              "absolute right-0 top-1/2 -translate-y-1/2 transform p-2 text-white",
+              currentIndex === products.length - slidesToShow && "opacity-20",
+            ])}
             onClick={next}
+            disabled={currentIndex === products.length - slidesToShow}
           >
-            Next
+            <LucideIcon
+              icon={Icons.CHEVRONSRIGHT}
+              strokeWidth={4}
+              color="#FF9224"
+            />
           </button>
+
+          <div className="mt-4 flex justify-center">
+            {products.length > 0 &&
+              Array(Math.ceil(products.length - (slidesToShow - 1)))
+                .fill(0)
+                .map((_, index) => (
+                  <button
+                    key={index}
+                    className={`mx-1 h-1 w-2 rounded-full ${
+                      index === currentIndex
+                        ? "w-10 transform bg-gradient-yellow-900 transition-all"
+                        : "bg-gradient-yellow-900"
+                    }`}
+                    onClick={() => {
+                      setCurrentIndex(index);
+                    }}
+                  />
+                ))}
+          </div>
         </div>
       </div>
     </>
@@ -155,6 +176,8 @@ const ProductBrowsingComponent: React.FC<ProductBrowsingComponentProps> = ({
 
 function Main() {
   const { products } = useContext(ProviderContext);
+
+  console.log(products);
 
   return (
     <div>

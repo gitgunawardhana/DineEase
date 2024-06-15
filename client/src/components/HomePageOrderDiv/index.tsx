@@ -49,7 +49,7 @@ const Main: React.FC<CardProps> = ({
       </div>
       <div className="p-4">
         <h3 className="mb-2 text-xl font-semibold text-amber-500">{title}</h3>
-        <p className="mb-4 max-w-[400px] p-5 text-sm text-white">
+        <p className="mb-4 max-w-[400px] p-5 text-sm leading-relaxed text-white">
           {description}
         </p>
         <button className="w-[250px] rounded-[15px] border-2 border-solid border-amber-500 !bg-transparent px-[30px] py-[10.141px] text-sm hover:scale-110 lg:px-[45px] lg:py-[10.141px]">
