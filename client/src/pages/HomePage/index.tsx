@@ -18,6 +18,7 @@ import OurMenu from "../../assets/images/HomePage/OurMenu.png";
 import Review_03 from "../../assets/images/HomePage/Pexels Photo by Pixabay.png";
 import Text_01 from "../../assets/images/HomePage/Text_01.png";
 import Text_02 from "../../assets/images/HomePage/Text_02.png";
+import ImageGallery from "./../../components/ImageGallery/index";
 // import Text_03 from "../../assets/images/HomePage/Text_03.png";
 // import Text_04 from "../../assets/images/HomePage/Text_04.png";
 // import Text_05 from "../../assets/images/HomePage/Text_05.png";
@@ -35,7 +36,6 @@ import { Button } from "../../base-components/Button";
 import ChefDisplay from "../../components/ChefDisplay/index";
 import DeliveryCards from "../../components/HomePageOrderDiv";
 import HomeBlog from "./../../components/HomeBlog/index";
-import ImageGallery from "./../../components/ImageGallery/index";
 import ProductBrowsingComponent from "./../../components/MenuItems/index";
 import ReviewCardComponent from "./../../components/ReviewCardComponent/index";
 
@@ -135,9 +135,7 @@ const Main = () => {
         <div className="flex flex-col items-center justify-center">
           <img src={OurMenu} alt="" className="scale-75" />
           <br />
-
           {/* from here */}
-
           <div className="container !w-full">
             <ProductBrowsingComponent />
           </div>
@@ -150,11 +148,10 @@ const Main = () => {
           backgroundImage: `url(${BestMenu})`,
           backgroundSize: "cover",
         }}
-        className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50 sm:h-screen md:h-full"
+        className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50"
       >
         <div className=" flex h-full flex-col items-center justify-center">
-          <img src={OurFood} alt="Our food" />
-          <br></br>
+          <img src={OurFood} alt="Our food" className="mb-20 scale-75" />
           <ImageGallery />
           <br></br>
         </div>

@@ -74,22 +74,24 @@ const ProductBrowsingComponent: React.FC<ProductBrowsingComponentProps> = ({
                         alt={product.name}
                         className="m-auto h-48 w-48 rounded-full object-cover"
                       />
-                      <div className="flex items-baseline justify-center gap-1 align-baseline">
-                        <h1 className=" mt-5 text-xl font-black uppercase tracking-widest text-[#FF9224]">
+                      <div className="flex flex-col items-baseline justify-center gap-1 align-baseline">
+                        <h1 className=" mt-5 text-xl font-black uppercase tracking-widest text-[#FF9224] m-auto">
                           {product.name}
                         </h1>
-                        <LucideIcon
-                          icon={Icons.START}
-                          strokeWidth={1}
-                          fill="#24FFFF"
-                          color="#24FFFF"
-                          className="ml-2 translate-y-1"
-                        />
-                        <p className=" text-xl font-extrabold leading-relaxed text-[#24FFFF]">
-                          {roundToDecimal(product.rate)}
-                        </p>
+                        <div className="flex justify-center gap-1 m-auto">
+                          <LucideIcon
+                            icon={Icons.START}
+                            strokeWidth={1}
+                            fill="#24FFFF"
+                            color="#24FFFF"
+                            className="ml-2 translate-y-1"
+                          />
+                          <p className=" text-xl font-extrabold leading-relaxed text-[#24FFFF]">
+                            {roundToDecimal(product.rate)}
+                          </p>
+                        </div>
                       </div>
-                      <p className=" mx-auto mb-5 mt-4 line-clamp-3 min-h-[60px] max-w-[320px] overflow-hidden !bg-gradient-to-b from-gradient-yellow-100 to-gradient-yellow-900 bg-clip-text text-sm font-normal leading-relaxed text-transparent">
+                      <p className=" mx-auto mb-5 mt-4 line-clamp-3 min-h-[60px] max-w-[320px] overflow-hidden !bg-gradient-to-b from-gradient-yellow-100 to-gradient-yellow-900 bg-clip-text text-sm font-normal leading-relaxed tracking-widest text-transparent">
                         {product.description}
                       </p>
                       <h1 className=" mb-4 text-xl font-black uppercase tracking-widest text-[#FF9224]">
