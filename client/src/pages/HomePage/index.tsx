@@ -15,7 +15,6 @@ import our_chef from "../../assets/images/HomePage/Our chefs.png";
 import Back_09 from "../../assets/images/HomePage/OurChef.svg";
 import OurFood from "../../assets/images/HomePage/OurFood.png";
 import OurMenu from "../../assets/images/HomePage/OurMenu.png";
-import Review_03 from "../../assets/images/HomePage/Pexels Photo by Pixabay.png";
 import Text_01 from "../../assets/images/HomePage/Text_01.png";
 import Text_02 from "../../assets/images/HomePage/Text_02.png";
 import ImageGallery from "./../../components/ImageGallery/index";
@@ -31,44 +30,13 @@ import chef_03 from "../../assets/images/HomePage/chef_03.png";
 import chef_04 from "../../assets/images/HomePage/chef_04.png";
 import get_started from "../../assets/images/HomePage/get_started.png";
 import google_pay from "../../assets/images/HomePage/google_pay.png";
-import rate from "../../assets/images/HomePage/stars.png";
 import { Button } from "../../base-components/Button";
 import ChefDisplay from "../../components/ChefDisplay/index";
 import DeliveryCards from "../../components/HomePageOrderDiv";
+import { reviews } from "../../components/ReviewCardComponent/ReviewDetails";
 import HomeBlog from "./../../components/HomeBlog/index";
 import ProductBrowsingComponent from "./../../components/MenuItems/index";
 import ReviewCardComponent from "./../../components/ReviewCardComponent/index";
-
-const reviews = [
-  {
-    name: "Ishan Tharindu",
-    rate: rate,
-    review:
-      "The food at this restaurant is absolutely incredible! Everything we tried was bursting with flavor and cooked to perfection. We especially loved the [Taco special], which was a unique and delightful combination of flavors. Well definitely be coming back for more!",
-    image: Review_03,
-  },
-  {
-    name: "Chamod Dilpa",
-    rate: rate,
-    review:
-      "I had an amazing experience at this restaurant! The food was delicious and beautifully presented, the staff was friendly and attentive, and the atmosphere was cozy and inviting. I highly recommend this place to anyone looking for a great meal and a wonderful dining experience.",
-    image: Review_03,
-  },
-  {
-    name: "Shashitha Akalanka",
-    rate: rate,
-    review:
-      "I cant say enough good things about this restaurant! The service was impeccable from start to finish, and the food was out of this world. I was blown away by the creativity and attention to detail in every dish. This is definitely one of my new favorite restaurants!",
-    image: Review_03,
-  },
-  {
-    name: "Chathura Dinushka",
-    rate: rate,
-    review:
-      "The food at this restaurant is absolutely incredible! Everything we tried was bursting with flavor and cooked to perfection. We especially loved the [Taco special], which was a unique and delightful combination of flavors. Well definitely be coming back for more!",
-    image: Review_03,
-  },
-];
 
 const Main = () => {
   return (
@@ -150,32 +118,32 @@ const Main = () => {
         }}
         className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50"
       >
-        <div className=" flex h-full flex-col items-center justify-center">
+        <div className="flex h-full flex-col items-center justify-center pb-20">
           <img src={OurFood} alt="Our food" className="mb-20 scale-75" />
           <ImageGallery />
-          <br></br>
         </div>
       </div>
 
-      {/** Fourth part */}
+      {/** Fifth part */}
 
       <div
         style={{
           backgroundImage: `url(${Back_05})`,
           backgroundSize: "cover",
         }}
-        className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50 sm:h-screen md:h-screen"
+        className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50"
       >
         <div className=" flex h-full flex-col items-center justify-center">
-          <img src={Text_08} alt="Our food" />
-          <br></br>
-          <br></br>
-          <ReviewCardComponent reviews={reviews} />
+          <img src={Text_08} alt="Our food" className="mb-12 scale-75" />
+          <div className="container !w-full pb-10">
+            <ReviewCardComponent reviews={reviews} />
+          </div>
+
           <br></br>
         </div>
       </div>
 
-      {/** Fifth part */}
+      {/** sixth part */}
 
       <div
         style={{
@@ -234,7 +202,7 @@ const Main = () => {
         <br></br>
       </div>
 
-      {/**sixth part */}
+      {/**seventh part */}
       <div
         style={{
           backgroundImage: `url(${Back_07})`,
@@ -291,7 +259,7 @@ const Main = () => {
         </div>
       </div>
 
-      {/**sixth part */}
+      {/**eighth part */}
       <div
         style={{
           backgroundImage: `url(${Back_08})`,
@@ -339,7 +307,7 @@ const Main = () => {
         </div>
       </div>
 
-      {/**sixth part */}
+      {/**ninth part */}
       <div
         style={{
           backgroundImage: `url(${Back_09})`,

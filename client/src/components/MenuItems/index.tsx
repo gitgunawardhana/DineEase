@@ -179,8 +179,6 @@ const ProductBrowsingComponent: React.FC<ProductBrowsingComponentProps> = ({
 function Main() {
   const { products } = useContext(ProviderContext);
 
-  console.log(products);
-
   return (
     <div>
       <ProductBrowsingComponent products={products} />
