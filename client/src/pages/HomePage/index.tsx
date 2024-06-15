@@ -7,6 +7,7 @@ import Back_03 from "../../assets/images/HomePage/Back_03.svg";
 import BestMenu from "../../assets/images/HomePage/BestMenu.svg";
 import Back_06 from "../../assets/images/HomePage/Blog.svg";
 import Back_05 from "../../assets/images/HomePage/CutomerReviews.svg";
+import DINEEASE from "../../assets/images/HomePage/DINEEASE.svg";
 import Delivery_01 from "../../assets/images/HomePage/Delivery_01.png";
 import Delivery_02 from "../../assets/images/HomePage/Delivery_02.png";
 import Delivery_03 from "../../assets/images/HomePage/Delivery_03.png";
@@ -144,7 +145,6 @@ const Main = () => {
       </div>
 
       {/** sixth part */}
-
       <div
         style={{
           backgroundImage: `url(${Back_06})`,
@@ -153,19 +153,18 @@ const Main = () => {
         className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50 sm:h-full md:h-screen"
       >
         <div className=" h-full items-center justify-center">
-          <div className="grid h-screen grid-cols-1 sm:grid-cols-2">
-            {/* First Column */}
-            <div className="h-screen rounded-3xl bg-amber-300 bg-opacity-50 p-4 md:h-5/6 md:pb-10">
-              {/* Text at the top of the card */}
-
-              {/* Button at the bottom of the card */}
+          <div className="flex flex-col justify-between lg:flex-row">
+            <div className=" order-last mx-5 flex -translate-y-8 flex-col justify-center rounded-3xl bg-opacity-50 !bg-gradient-to-br !from-[#FFE35348] !to-[#fc9b0b48] p-4 md:translate-y-5 lg:w-1/2 lg:translate-y-10 xl:w-1/3 xl:-translate-x-28 xl:translate-y-32">
               <br />
-              <h2 className="uppercase tracking-widest text-gray-900 xs:text-[30px] xs:font-black sm:text-[40px]">
+              {/* <h2 className="m-auto text-4xl font-black uppercase tracking-widest text-gray-900">
                 DineEase Blog
-              </h2>
-              <br />
-
-              <p className="p-5 text-justify text-xs text-gray-900 xs:p-10 xs:text-lg sm:text-xl">
+              </h2> */}
+              <img
+                src={DINEEASE}
+                alt=""
+                className="m-auto my-3 w-48 items-center xs:w-52 sm:w-60 md:w-72"
+              />
+              <p className=" m-auto max-w-[450px] p-5 text-justify text-sm font-semibold leading-relaxed tracking-widest text-black">
                 Welcome to the Taco Grag restaurant blog, your ultimate guide to
                 all things related to our restaurant! Here, you'll find a
                 plethora of information about our mouth-watering food, talented
@@ -177,26 +176,23 @@ const Main = () => {
                 relax, and let us take you on a journey through the world of
                 Taco Grag!
               </p>
-
               <Button
                 as={NavLink}
                 to="/"
                 className={twMerge(
-                  "rounded-[15px] border-2 border-solid border-gradient-yellow-300 !bg-zinc-800 bg-opacity-50 px-[20px] py-[20px] xs:px-[120px]  sm:px-[180px] sm:py-[20px]"
+                  "mx-auto mb-10 mt-4 max-w-[450px] rounded-[15px] border-none !bg-[#402F11] bg-opacity-50 px-[30px] xs:px-[100px] sm:px-[130px]"
                 )}
               >
                 <span
                   className={twMerge(
-                    "!text-#FFE353 text-[14px] font-[900] uppercase tracking-[2px] hover:scale-110"
+                    "m-auto w-auto text-sm font-black uppercase tracking-[2px] !text-gradient-yellow-900"
                   )}
                 >
                   Go to Our Blog
                 </span>
               </Button>
             </div>
-
-            {/* Second Column */}
-            <div className="p-4">{/* Content of the second column */}</div>
+            <div className="p-4"></div>
           </div>
         </div>
         <br></br>
