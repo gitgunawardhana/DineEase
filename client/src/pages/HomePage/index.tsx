@@ -141,7 +141,7 @@ const Main = () => {
           </div>
         </div>
       </div>
-      {/** Third part */}
+      {/** Fourth part */}
 
       <div
         style={{
