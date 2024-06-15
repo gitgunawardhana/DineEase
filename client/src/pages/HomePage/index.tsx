@@ -102,7 +102,7 @@ const Main = () => {
         className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50 md:h-screen"
       >
         <div className="flex flex-col items-center justify-center">
-          <img src={OurMenu} alt="" className="scale-75" />
+          <img src={OurMenu} alt="" className="scale-50 sm:scale-75" />
           <br />
           {/* from here */}
           <div className="container !w-full">
@@ -120,7 +120,11 @@ const Main = () => {
         className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50"
       >
         <div className="flex h-full flex-col items-center justify-center pb-20">
-          <img src={OurFood} alt="Our food" className="mb-20 scale-75" />
+          <img
+            src={OurFood}
+            alt="Our food"
+            className="mb-20 scale-50 sm:scale-75"
+          />
           <ImageGallery />
         </div>
       </div>
@@ -204,17 +208,16 @@ const Main = () => {
           backgroundImage: `url(${Back_07})`,
           backgroundSize: "cover",
         }}
-        className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50 sm:h-full md:h-screen"
+        className="w-m relative flex h-screen flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50 sm:h-screen md:h-screen "
       >
-        <div className=" flex h-1/5 flex-col items-center justify-center">
-          <img src={about} alt="" />
-          <br />
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2">
-          <div></div>
+        <div className="container absolute left-1/2 top-1/2 m-auto flex -translate-x-1/2 -translate-y-1/2 justify-center px-5 md:w-[700px] md:px-0">
           <div>
-            <p className="p-5 text-justify tracking-tight text-[px] text-amber-400 xs:leading-7">
-              {" "}
+            <img
+              src={about}
+              alt=""
+              className="m-auto mb-5 scale-50 sm:mb-16 sm:scale-75"
+            />
+            <p className="text-center text-sm leading-relaxed tracking-widest text-amber-400">
               Welcome to our website for the Grand café restaurant, located in
               One Galle Face, Colombo! We are a food restaurant that is open
               from 6.00 pm to 1.00 am, and we take pride in offering our
@@ -240,12 +243,12 @@ const Main = () => {
               as={NavLink}
               to="/"
               className={twMerge(
-                "rounded-[15px] border-2 border-solid border-gradient-yellow-500 !bg-transparent bg-opacity-50 px-[20px] py-[20px]   sm:px-[80px] sm:py-[20px]"
+                "mt-14 rounded-2xl border-2 border-solid border-gradient-yellow-500 !bg-transparent bg-opacity-50 px-20"
               )}
             >
               <span
                 className={twMerge(
-                  "!text-#FFE353 text-[14px] font-[900] uppercase tracking-[2px] hover:scale-110"
+                  "text-sm font-black uppercase tracking-widest !text-amber-400"
                 )}
               >
                 Read More
