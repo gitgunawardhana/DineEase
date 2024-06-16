@@ -18,6 +18,7 @@ import OurMenu from "../../assets/images/HomePage/OurMenu.png";
 import Text_01 from "../../assets/images/HomePage/Text_01.png";
 import Text_02 from "../../assets/images/HomePage/Text_02.png";
 import AboutUs from "../../components/AboutUs";
+import ReviewCard from "../../components/ReviewCard";
 import ImageGallery from "./../../components/ImageGallery/index";
 // import Text_03 from "../../assets/images/HomePage/Text_03.png";
 // import Text_04 from "../../assets/images/HomePage/Text_04.png";
@@ -136,23 +137,7 @@ const Main = () => {
       </div>
 
       {/** Fifth part */}
-
-      <div
-        style={{
-          backgroundImage: `url(${Back_05})`,
-          backgroundSize: "cover",
-        }}
-        className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50"
-      >
-        <div className=" flex h-full flex-col items-center justify-center">
-          <img src={Text_08} alt="Our food" className="mb-12 scale-75" />
-          <div className="container !w-full pb-10">
-            <ReviewCardComponent reviews={reviews} />
-          </div>
-
-          <br></br>
-        </div>
-      </div>
+      <ReviewCard />
 
       {/** sixth part */}
       <div

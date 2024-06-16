@@ -1,13 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
-// import Text_03 from "../../assets/images/HomePage/Text_03.png";
-// import Text_04 from "../../assets/images/HomePage/Text_04.png";
-// import Text_05 from "../../assets/images/HomePage/Text_05.png";
 import Back_07 from "../../assets/images/HomePage/AboutUs.svg";
 import about from "../../assets/images/HomePage/about.png";
-// import Text_03 from "../../assets/images/HomePage/Text_03.png";
-// import Text_04 from "../../assets/images/HomePage/Text_04.png";
-// import Text_05 from "../../assets/images/HomePage/Text_05.png";
 import { Button } from "../../base-components/Button";
 
 const Index = () => {
@@ -51,7 +45,7 @@ const Index = () => {
             as={NavLink}
             to="/"
             className={twMerge(
-              "mt-14 mx-auto rounded-2xl border-2 border-solid border-gradient-yellow-500 !bg-transparent bg-opacity-50 px-20"
+              "mx-auto mt-14 rounded-2xl border-2 border-solid border-gradient-yellow-500 !bg-transparent bg-opacity-50 px-20"
             )}
           >
             <span
