@@ -156,9 +156,9 @@ const Main = () => {
         }}
         className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50 sm:h-full md:h-screen"
       >
-        <div className=" h-full items-center justify-center">
+        <div className="h-full items-center justify-center">
           <div className="flex flex-col justify-between lg:flex-row">
-            <div className=" order-last mx-5 flex -translate-y-8 flex-col justify-center rounded-3xl bg-opacity-50 !bg-gradient-to-br !from-[#FFE35348] !to-[#fc9b0b48] p-4 md:translate-y-5 lg:w-1/2 lg:translate-y-10 xl:w-1/3 xl:-translate-x-28 xl:translate-y-32">
+            <div className="order-last mx-5 flex -translate-y-8 flex-col justify-center rounded-3xl bg-opacity-50 !bg-gradient-to-br !from-[#FFE35348] !to-[#fc9b0b48] p-4 md:translate-y-5 lg:w-1/2 lg:translate-y-10 xl:w-1/3 xl:-translate-x-28 xl:translate-y-32">
               <br />
               {/* <h2 className="m-auto text-4xl font-black uppercase tracking-widest text-gray-900">
                 DineEase Blog
@@ -264,46 +264,49 @@ const Main = () => {
           backgroundImage: `url(${Back_08})`,
           backgroundSize: "cover",
         }}
-        className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50 sm:h-full md:h-screen"
+        className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px] text-center text-slate-900 dark:text-slate-50 lg:h-screen"
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 ">
-          <div className="flex flex-col items-center justify-center">
-            <img src={get_started} alt="" className="w-3/4" />
-            <br />
-            <p className="p-5 text-center   tracking-wide text-amber-400 xs:p-10 xs:leading-7 sm:leading-10">
-              Welcome to our mobile app for Taco Grag restaurant ! Our mobile
-              app is the perfect way to stay connected with us and enjoy all of
-              our services on the go. With our app, you can easily browse our
-              menu, place orders for pickup or delivery, and even make
-              reservations at our restaurant.
-            </p>
-            <Button
-              as={NavLink}
-              to="/"
-              className={twMerge(
-                "!bg-gradient-yellow rounded-[15px] border-2 border-solid  border-gradient-yellow-500 bg-opacity-50 px-[20px] py-[20px] hover:text-amber-300   sm:px-[80px] sm:py-[20px]"
-              )}
-            >
-              <span
+        <div className="h-full items-center justify-center">
+          <div className="flex flex-col justify-between lg:flex-row">
+            <div className=" mx-5 flex flex-col justify-center rounded-3xl bg-opacity-50  p-4 md:translate-y-5 lg:w-1/2 lg:translate-y-20 xl:w-1/3 xl:translate-x-28 xl:translate-y-28">
+              <br />
+              <img src={get_started} alt="" className="scale-75" />
+              <br />
+              <p className="p-5 text-center text-sm leading-relaxed tracking-widest text-amber-400">
+                Welcome to our mobile app for Taco Grag restaurant ! Our mobile
+                app is the perfect way to stay connected with us and enjoy all
+                of our services on the go. With our app, you can easily browse
+                our menu, place orders for pickup or delivery, and even make
+                reservations at our restaurant.
+              </p>
+              <Button
+                as={NavLink}
+                to="/"
                 className={twMerge(
-                  "!text-#FFE353 text-[14px] font-[900] uppercase tracking-[2px]  "
+                  "!bg-gradient-yellow m-auto mb-10 mt-5 rounded-[15px]  border-2 border-solid border-gradient-yellow-500 bg-opacity-50 px-20 hover:text-amber-300"
                 )}
               >
-                Download App
-              </span>
-            </Button>
-            <br />
-            <div className="flex grid-cols-2 sm:mt-10">
-              <div className="mx-4">
-                <img src={app_store} alt="" />
-              </div>
-              <div className="mx-4">
-                <img src={google_pay} alt="" />
+                <span
+                  className={twMerge(
+                    "text-[14px] font-[900] uppercase tracking-[2px] !text-gradient-yellow-500  "
+                  )}
+                >
+                  Download App
+                </span>
+              </Button>
+              <div className="m-auto flex grid-cols-2 gap-4">
+                <div className="">
+                  <img src={app_store} alt="" className="h-16" />
+                </div>
+                <div className="">
+                  <img src={google_pay} alt="" className="h-16" />
+                </div>
               </div>
             </div>
+            <div className="p-4"></div>
           </div>
-          <div></div>
         </div>
+        <br></br>
       </div>
 
       {/**ninth part */}
