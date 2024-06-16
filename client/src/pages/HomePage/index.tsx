@@ -39,6 +39,13 @@ import HomeBlog from "./../../components/HomeBlog/index";
 import ProductBrowsingComponent from "./../../components/MenuItems/index";
 import ReviewCardComponent from "./../../components/ReviewCardComponent/index";
 
+const chefs = [
+  { name: "Grant Achatz", imageId: chef_01 },
+  { name: "Ferran Adria", imageId: chef_02 },
+  { name: "Nicolas Appert", imageId: chef_03 },
+  { name: "Mario Batali", imageId: chef_04 },
+];
+
 const Main = () => {
   return (
     <div>
@@ -315,49 +322,20 @@ const Main = () => {
           backgroundImage: `url(${Back_09})`,
           backgroundSize: "cover",
         }}
-        className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50 sm:h-full md:h-screen"
+        className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50 sm:h-full md:h-full"
       >
         <div className="grid items-center justify-center">
-          <img src={our_chef} alt="" className="" />
+          <img src={our_chef} alt="" className="scale-50 sm:scale-75" />
           <br />
         </div>
-        <div className="grid sm:grid-cols-4 ">
-          <div>
-            <ChefDisplay
-              person={{
-                name: "Grant Achatz",
-                imageId: chef_01,
-              }}
-            />
-          </div>
-          <div>
-            <ChefDisplay
-              person={{
-                name: "Ferran Adria",
-                imageId: chef_02,
-              }}
-            />
-          </div>
-          <div>
-            <ChefDisplay
-              person={{
-                name: "Nicolas Appert",
-                imageId: chef_03,
-              }}
-            />
-          </div>
-          <div>
-            <ChefDisplay
-              person={{
-                name: "Mario Batali",
-                imageId: chef_04,
-              }}
-            />
-          </div>
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 ">
+          {chefs.map((chef, index) => (
+            <div key={index}>
+              <ChefDisplay person={chef} />
+            </div>
+          ))}
         </div>
       </div>
-      <br />
-      <br />
     </div>
   );
 };

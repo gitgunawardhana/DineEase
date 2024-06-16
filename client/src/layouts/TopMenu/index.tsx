@@ -23,7 +23,7 @@ const Main = (props: SideMenuLayoutsProps) => {
       >
         {props.children}
         {props.footer && (
-          <div className="-mx-5 -mb-5 mt-10">
+          <div className="-mx-5 -mb-5">
             <Footer />
           </div>
         )}
