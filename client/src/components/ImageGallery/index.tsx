@@ -82,7 +82,7 @@ const index = () => {
             <img
               src={image.src}
               alt={image.alt}
-              className="h-full w-full transform rounded-lg object-cover transition-all hover:scale-[1.03] hover:cursor-pointer"
+              className="h-full w-full transform rounded-lg object-cover duration-500 transition-all hover:scale-[1.03] hover:cursor-pointer"
             />
           </div>
         ))}

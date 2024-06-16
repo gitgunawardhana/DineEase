@@ -290,12 +290,12 @@ const Main = () => {
                 as={NavLink}
                 to="/"
                 className={twMerge(
-                  "!bg-gradient-yellow m-auto mb-10 mt-5 rounded-[15px]  border-2 border-solid border-gradient-yellow-500 bg-opacity-50 px-20 hover:text-amber-300"
+                  "!bg-gradient-yellow m-auto mb-10 mt-5 rounded-[15px]  border-2 border-solid border-gradient-yellow-500 bg-opacity-50 px-20 hover:text-amber-300 transform transition-all"
                 )}
               >
                 <span
                   className={twMerge(
-                    "text-[14px] font-[900] uppercase tracking-[2px] !text-gradient-yellow-500  "
+                    "text-[14px] font-[900] uppercase tracking-[2px] !text-gradient-yellow-500 transform transition-all"
                   )}
                 >
                   Download App
@@ -303,10 +303,10 @@ const Main = () => {
               </Button>
               <div className="m-auto flex grid-cols-2 gap-4">
                 <div className="">
-                  <img src={app_store} alt="" className="h-16" />
+                  <img src={app_store} alt="" className="h-16 cursor-pointer" />
                 </div>
                 <div className="">
-                  <img src={google_pay} alt="" className="h-16" />
+                  <img src={google_pay} alt="" className="h-16 cursor-pointer" />
                 </div>
               </div>
             </div>

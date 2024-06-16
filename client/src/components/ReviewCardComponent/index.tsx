@@ -59,7 +59,7 @@ const ReviewCardComponent: React.FC<ReviewCardComponentProps> = ({
         <div className="relative mt-20">
           <div className="overflow-hidden">
             <div
-              className="flex transition-transform duration-500"
+              className="flex transition-transform duration-1000"
               style={{
                 transform: `translateX(-${
                   (100 / slidesToShow) * currentIndex
