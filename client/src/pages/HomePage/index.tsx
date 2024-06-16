@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
-import Back_07 from "../../assets/images/HomePage/AboutUs.svg";
 import Back_01 from "../../assets/images/HomePage/Back_01.svg";
 import Back_02 from "../../assets/images/HomePage/Back_02.svg";
 import Back_03 from "../../assets/images/HomePage/Back_03.svg";
@@ -18,12 +17,12 @@ import OurFood from "../../assets/images/HomePage/OurFood.png";
 import OurMenu from "../../assets/images/HomePage/OurMenu.png";
 import Text_01 from "../../assets/images/HomePage/Text_01.png";
 import Text_02 from "../../assets/images/HomePage/Text_02.png";
+import AboutUs from "../../components/AboutUs";
 import ImageGallery from "./../../components/ImageGallery/index";
 // import Text_03 from "../../assets/images/HomePage/Text_03.png";
 // import Text_04 from "../../assets/images/HomePage/Text_04.png";
 // import Text_05 from "../../assets/images/HomePage/Text_05.png";
 import Text_08 from "../../assets/images/HomePage/Text_08.png";
-import about from "../../assets/images/HomePage/about.png";
 import app_store from "../../assets/images/HomePage/app_store.png";
 import chef_01 from "../../assets/images/HomePage/chef_01.png";
 import chef_02 from "../../assets/images/HomePage/chef_02.png";
@@ -210,60 +209,7 @@ const Main = () => {
       </div>
 
       {/**seventh part */}
-      <div
-        style={{
-          backgroundImage: `url(${Back_07})`,
-          backgroundSize: "cover",
-        }}
-        className="w-m relative flex h-screen flex-col bg-repeat p-5 pt-[80px]  text-center text-slate-900 dark:text-slate-50 sm:h-screen md:h-screen "
-      >
-        <div className="container absolute left-1/2 top-1/2 m-auto flex -translate-x-1/2 -translate-y-1/2 justify-center px-5 md:w-[700px] md:px-0">
-          <div>
-            <img
-              src={about}
-              alt=""
-              className="m-auto mb-5 scale-50 sm:mb-16 sm:scale-75"
-            />
-            <p className="text-center text-sm leading-relaxed tracking-widest text-amber-400">
-              Welcome to our website for the Grand café restaurant, located in
-              One Galle Face, Colombo! We are a food restaurant that is open
-              from 6.00 pm to 1.00 am, and we take pride in offering our
-              customers a unique and unforgettable dining experience.
-              <br />
-              <br />
-              <span>
-                At Grand café, we are passionate about delivering the finest
-                food and customer service in the industry. Our menu is carefully
-                crafted to cater to all tastes, and we use only the freshest and
-                highest-quality ingredients in our dishes. From delicious
-                appetizers to mouth-watering entrees and decadent desserts, we
-                have something to satisfy every craving.
-              </span>
-              <br />
-              <br /> If you're looking to dine with us, you can easily book a
-              table through our website. We also offer takeaway options for
-              those who prefer to enjoy our food from the comfort of their own
-              homes.
-            </p>
-
-            <Button
-              as={NavLink}
-              to="/"
-              className={twMerge(
-                "mt-14 rounded-2xl border-2 border-solid border-gradient-yellow-500 !bg-transparent bg-opacity-50 px-20"
-              )}
-            >
-              <span
-                className={twMerge(
-                  "text-sm font-black uppercase tracking-widest !text-amber-400"
-                )}
-              >
-                Read More
-              </span>
-            </Button>
-          </div>
-        </div>
-      </div>
+      <AboutUs />
 
       {/**eighth part */}
       <div
@@ -290,12 +236,12 @@ const Main = () => {
                 as={NavLink}
                 to="/"
                 className={twMerge(
-                  "!bg-gradient-yellow m-auto mb-10 mt-5 rounded-[15px]  border-2 border-solid border-gradient-yellow-500 bg-opacity-50 px-20 hover:text-amber-300 transform transition-all"
+                  "!bg-gradient-yellow m-auto mb-10 mt-5 transform  rounded-[15px] border-2 border-solid border-gradient-yellow-500 bg-opacity-50 px-20 transition-all hover:text-amber-300"
                 )}
               >
                 <span
                   className={twMerge(
-                    "text-[14px] font-[900] uppercase tracking-[2px] !text-gradient-yellow-500 transform transition-all"
+                    "transform text-[14px] font-[900] uppercase tracking-[2px] !text-gradient-yellow-500 transition-all"
                   )}
                 >
                   Download App
@@ -306,7 +252,11 @@ const Main = () => {
                   <img src={app_store} alt="" className="h-16 cursor-pointer" />
                 </div>
                 <div className="">
-                  <img src={google_pay} alt="" className="h-16 cursor-pointer" />
+                  <img
+                    src={google_pay}
+                    alt=""
+                    className="h-16 cursor-pointer"
+                  />
                 </div>
               </div>
             </div>
