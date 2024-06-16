@@ -5,7 +5,6 @@ import Back_02 from "../../assets/images/HomePage/Back_02.svg";
 import Back_03 from "../../assets/images/HomePage/Back_03.svg";
 import BestMenu from "../../assets/images/HomePage/BestMenu.svg";
 import Back_06 from "../../assets/images/HomePage/Blog.svg";
-import Back_05 from "../../assets/images/HomePage/CutomerReviews.svg";
 import DINEEASE from "../../assets/images/HomePage/DINEEASE.svg";
 import Delivery_01 from "../../assets/images/HomePage/Delivery_01.png";
 import Delivery_02 from "../../assets/images/HomePage/Delivery_02.png";
@@ -23,7 +22,6 @@ import ImageGallery from "./../../components/ImageGallery/index";
 // import Text_03 from "../../assets/images/HomePage/Text_03.png";
 // import Text_04 from "../../assets/images/HomePage/Text_04.png";
 // import Text_05 from "../../assets/images/HomePage/Text_05.png";
-import Text_08 from "../../assets/images/HomePage/Text_08.png";
 import app_store from "../../assets/images/HomePage/app_store.png";
 import chef_01 from "../../assets/images/HomePage/chef_01.png";
 import chef_02 from "../../assets/images/HomePage/chef_02.png";
@@ -34,10 +32,8 @@ import google_pay from "../../assets/images/HomePage/google_pay.png";
 import { Button } from "../../base-components/Button";
 import ChefDisplay from "../../components/ChefDisplay/index";
 import DeliveryCards from "../../components/HomePageOrderDiv";
-import { reviews } from "../../components/ReviewCardComponent/ReviewDetails";
 import HomeBlog from "./../../components/HomeBlog/index";
 import ProductBrowsingComponent from "./../../components/MenuItems/index";
-import ReviewCardComponent from "./../../components/ReviewCardComponent/index";
 
 const chefs = [
   { name: "Grant Achatz", imageId: chef_01 },
