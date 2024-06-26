@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import "react-resizable/css/styles.css";
 import { NavLink } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import Back_01 from "../../assets/images/HomePage/Back_01.svg";
@@ -9,30 +11,25 @@ import DINEEASE from "../../assets/images/HomePage/DINEEASE.svg";
 import Delivery_01 from "../../assets/images/HomePage/Delivery_01.png";
 import Delivery_02 from "../../assets/images/HomePage/Delivery_02.png";
 import Delivery_03 from "../../assets/images/HomePage/Delivery_03.png";
-import Back_08 from "../../assets/images/HomePage/MobileApp.svg";
 import our_chef from "../../assets/images/HomePage/Our chefs.png";
 import Back_09 from "../../assets/images/HomePage/OurChef.svg";
 import OurFood from "../../assets/images/HomePage/OurFood.png";
 import OurMenu from "../../assets/images/HomePage/OurMenu.png";
 import Text_01 from "../../assets/images/HomePage/Text_01.png";
 import Text_02 from "../../assets/images/HomePage/Text_02.png";
-import AboutUs from "../../components/AboutUs";
-import ReviewCard from "../../components/ReviewCard";
-import ImageGallery from "./../../components/ImageGallery/index";
-// import Text_03 from "../../assets/images/HomePage/Text_03.png";
-// import Text_04 from "../../assets/images/HomePage/Text_04.png";
-// import Text_05 from "../../assets/images/HomePage/Text_05.png";
-import app_store from "../../assets/images/HomePage/app_store.png";
 import chef_01 from "../../assets/images/HomePage/chef_01.png";
 import chef_02 from "../../assets/images/HomePage/chef_02.png";
 import chef_03 from "../../assets/images/HomePage/chef_03.png";
 import chef_04 from "../../assets/images/HomePage/chef_04.png";
-import get_started from "../../assets/images/HomePage/get_started.png";
-import google_pay from "../../assets/images/HomePage/google_pay.png";
 import { Button } from "../../base-components/Button";
+import AboutUs from "../../components/AboutUs";
 import ChefDisplay from "../../components/ChefDisplay/index";
 import DeliveryCards from "../../components/HomePageOrderDiv";
+import Location from "../../components/Location";
+import MobileApp from "../../components/MobileApp";
+import ReviewCard from "../../components/ReviewCard";
 import HomeBlog from "./../../components/HomeBlog/index";
+import ImageGallery from "./../../components/ImageGallery/index";
 import ProductBrowsingComponent from "./../../components/MenuItems/index";
 
 const chefs = [
@@ -43,6 +40,25 @@ const chefs = [
 ];
 
 const Main = () => {
+  const [width, setWidth] = useState(600);
+  const [height, setHeight] = useState(450);
+
+  useEffect(() => {
+    // Calculate initial width and height based on the window size or parent container
+    const handleResize = () => {
+      setWidth(window.innerWidth * 0.5); // 50% of the window width
+      setHeight(window.innerHeight * 0.5); // 50% of the window height
+    };
+
+    // Set initial size
+    handleResize();
+
+    // Add event listener to update size on window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <div>
       {/**First Part */}
@@ -193,59 +209,10 @@ const Main = () => {
       <AboutUs />
 
       {/**eighth part */}
-      <div
-        style={{
-          backgroundImage: `url(${Back_08})`,
-          backgroundSize: "cover",
-        }}
-        className="w-m flex h-full flex-col bg-repeat p-5 pt-[80px] text-center text-slate-900 dark:text-slate-50 lg:h-screen"
-      >
-        <div className="h-full items-center justify-center">
-          <div className="flex flex-col justify-between lg:flex-row">
-            <div className=" mx-5 flex flex-col justify-center rounded-3xl bg-opacity-50  p-4 md:translate-y-5 lg:w-1/2 lg:translate-y-20 xl:w-1/3 xl:translate-x-28 xl:translate-y-28">
-              <br />
-              <img src={get_started} alt="" className="scale-75" />
-              <br />
-              <p className="p-5 text-center text-sm leading-relaxed tracking-widest text-amber-400">
-                Welcome to our mobile app for Taco Grag restaurant ! Our mobile
-                app is the perfect way to stay connected with us and enjoy all
-                of our services on the go. With our app, you can easily browse
-                our menu, place orders for pickup or delivery, and even make
-                reservations at our restaurant.
-              </p>
-              <Button
-                as={NavLink}
-                to="/"
-                className={twMerge(
-                  "!bg-gradient-yellow m-auto mb-10 mt-5 transform  rounded-[15px] border-2 border-solid border-gradient-yellow-500 bg-opacity-50 px-20 transition-all hover:text-amber-300"
-                )}
-              >
-                <span
-                  className={twMerge(
-                    "transform text-[14px] font-[900] uppercase tracking-[2px] !text-gradient-yellow-500 transition-all"
-                  )}
-                >
-                  Download App
-                </span>
-              </Button>
-              <div className="m-auto flex grid-cols-2 gap-4">
-                <div className="">
-                  <img src={app_store} alt="" className="h-16 cursor-pointer" />
-                </div>
-                <div className="">
-                  <img
-                    src={google_pay}
-                    alt=""
-                    className="h-16 cursor-pointer"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="p-4"></div>
-          </div>
-        </div>
-        <br></br>
-      </div>
+      <MobileApp />
+
+      {/**eighth part */}
+      <Location />
 
       {/**ninth part */}
       <div
