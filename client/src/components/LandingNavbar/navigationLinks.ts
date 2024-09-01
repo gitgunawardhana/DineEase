@@ -1,27 +1,33 @@
 export interface NavigationLink {
-  title: string;
-  to: string;
+  name: string;
+  href: string;
+  current: boolean;
 }
 
 export const navigationLinks = [
   {
-    title: "Home",
-    to: "/home",
+    name: "Home",
+    href: "/home",
+    current: false,
   },
   {
-    title: "About Us",
-    to: "/about-us",
+    name: "About Us",
+    href: "/about-us",
+    current: false,
   },
   {
-    title: "Contact Us",
-    to: "/contact-us",
+    name: "Contact Us",
+    href: "/contact-us",
+    current: false,
   },
   {
-    title: "Reviews",
-    to: "/reviews",
+    name: "Reviews",
+    href: "/reviews",
+    current: false,
   },
   {
-    title: "Location",
-    to: "/location",
+    name: "Location",
+    href: "/location",
+    current: false,
   },
 ];

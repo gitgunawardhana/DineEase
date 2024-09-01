@@ -1,94 +1,175 @@
-import { useContext, useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Fragment, useEffect, useRef } from "react";
+import { HiMiniBars3, HiMiniBars3CenterLeft } from "react-icons/hi2";
+import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
-import { Button } from "../../base-components/Button";
 import Logo from "../../base-components/Logo";
 import LucideIcon from "../../base-components/LucideIcon";
-import { CSSClasses } from "../../constants";
-import ProfileOptions from "../ProfileOptions";
-import { ProviderContext } from "../Provider";
 import { navigationLinks } from "./navigationLinks";
+// import waveristaLogo from "../../assets/waveristaLogo.svg";
 
-function Main() {
-  //* Dropdown menu handler - start
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const handleToggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-  //* Dropdown menu handler - end
-
-  //* Set class name according to window width - start
-  const [clsProfileBtn, setClsProfileBtn] = useState("");
-  const { windowSize } = useContext(ProviderContext);
+const Main = () => {
+  // Handle header show/hide animation depending on the scroll direction
+  const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (windowSize.width < 768) {
-      setClsProfileBtn("fixed right-[29px] top-[38px]");
-      setIsDropdownOpen(false);
-    } else {
-      setClsProfileBtn("");
-      setIsDropdownOpen(true);
-    }
-  }, [windowSize.width, clsProfileBtn]);
-  //* Set class name according to window width - end
+    let prevScrollPos = window.scrollY;
+
+    // Handle scroll events
+    const handleScroll = () => {
+      const currScrollPos = window.scrollY;
+      const currHeaderElement = headerRef.current;
+
+      console.log(currScrollPos);
+
+      if (!currHeaderElement) return;
+
+      if (prevScrollPos > currScrollPos) {
+        currHeaderElement.style.transform = "translateY(0)";
+      } else {
+        currHeaderElement.style.transform = "translateY(-200px)";
+      }
+      prevScrollPos = currScrollPos;
+    };
+
+    // Set up listeners for the scroll event
+    window.addEventListener("scroll", handleScroll);
+
+    // Remove listeners for the scroll event
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  });
 
   return (
-    <div>
-      <nav
-        className={twMerge(
-          "fixed left-0 top-0 z-20 w-full border-none !bg-transparent backdrop-blur-md dark:bg-gray-900"
-        )}
-      >
-        <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
-          <Button
-            as={NavLink}
-            to="/"
-            className="flex items-center !border-none !bg-transparent !shadow-none"
-          >
-            <Logo className="!h-14 !w-14" />
-            <span className="hidden self-center whitespace-nowrap text-2xl font-semibold dark:text-white sm:!block">
-              DineEase
-            </span>
-          </Button>
-          <div className={twMerge(["flex md:order-2", clsProfileBtn])}>
-            {/* <Button type="button" className={CSSClasses.NAVBARICON}>
-            </Button> */}
-            <ProfileOptions className={CSSClasses.NAVBARICON} />
-            <Button
-              type="button"
-              className="inline-flex h-9 w-9 translate-y-0.5 items-center justify-center rounded-full border-2 !border-gradient-yellow-500 !bg-transparent p-2 text-sm !text-gradient-yellow-500 hover:bg-transparent md:hidden"
-              aria-expanded="false"
-              onClick={handleToggleDropdown}
-            >
-              <span className="sr-only">Open</span>
-              <LucideIcon icon="MoreVertical" strokeWidth={2} />
-            </Button>
-          </div>
-          {isDropdownOpen && (
-            <div className="w-full items-center justify-between md:order-1 md:flex md:w-auto">
-              <ul className="!mt-4 flex flex-col rounded-lg border border-gradient-yellow-500 !bg-transparent bg-gray-50 p-4 font-medium backdrop-blur-md md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0">
-                {navigationLinks?.map((item, id) => (
-                  <li key={id}>
-                    <Button
-                      as={NavLink}
-                      to={item.to}
-                      className={twMerge([
-                        "mb-6 block border-none !bg-transparent !px-0 py-0 !pb-[.1] !pt-0 uppercase !text-gradient-yellow-500 hover:!text-gradient-yellow-900 md:p-0",
-                      ])}
-                      aria-current="page"
+    <div
+      className="fixed left-0 right-0 top-0 z-50 !h-[56px] translate-y-0 transform text-sm font-medium transition-transform duration-300 ease-in-out"
+      ref={headerRef}
+    >
+      <Disclosure as="nav" className="bg-transparent backdrop-blur-md">
+        {({ open }) => (
+          <>
+            <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+              <div className="relative flex h-16 items-center justify-between">
+                <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
+                  {/* Mobile menu button */}
+                  <Disclosure.Button className="relative inline-flex items-center justify-center rounded-full p-1 text-gradient-yellow-900 hover:bg-gradient-yellow-900 hover:text-white">
+                    <span className="absolute -inset-0.5" />
+                    <span className="sr-only">Open main menu</span>
+                    {open ? <HiMiniBars3CenterLeft /> : <HiMiniBars3 />}
+                  </Disclosure.Button>
+                </div>
+                <div className="flex flex-1 items-center justify-start sm:items-stretch sm:justify-start">
+                  <div className="flex flex-shrink-0 items-center">
+                    <Link to="/">
+                      <Logo className="!h-14 !w-14" />
+                    </Link>
+                  </div>
+                </div>
+                <div className="absolute inset-y-0 right-7 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                  <div className="hidden sm:ml-6 sm:block">
+                    <div className="flex space-x-4">
+                      {navigationLinks.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.href}
+                          className={twMerge([
+                            item.current
+                              ? "bg-gray-900 text-white"
+                              : "text-gradient-yellow-900 hover:bg-gray-100 hover:bg-opacity-5 hover:text-gradient-yellow-500",
+                            "rounded-md px-3 py-2 text-sm font-medium",
+                          ])}
+                          aria-current={item.current ? "page" : undefined}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Profile dropdown */}
+                  <Menu as="div" className="relative ml-3">
+                    <div>
+                      <Menu.Button className="relative flex rounded-full bg-transparent text-sm focus:outline-none focus:ring-0 focus:ring-gradient-yellow-900 focus:ring-offset-0 focus:ring-offset-gray-800">
+                        <span className="absolute -inset-1.5" />
+                        <span className="sr-only">Open user menu</span>
+                        <LucideIcon
+                          icon="UserCircle"
+                          size={40}
+                          strokeWidth={1}
+                          className={twMerge([
+                            "mx-auto block text-gradient-yellow-500",
+                          ])}
+                        />
+                      </Menu.Button>
+                    </div>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
                     >
-                      {item.title}
-                    </Button>
-                  </li>
-                ))}
-              </ul>
+                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md !bg-black py-1 shadow-lg ring-1 ring-black ring-opacity-5 !backdrop-blur-lg focus:outline-none">
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/sign-in"
+                              className={twMerge([
+                                active ? "bg-gray-100 bg-opacity-5" : "",
+                                "block px-4 py-2 text-sm text-gradient-yellow-900 hover:text-gradient-yellow-500",
+                              ])}
+                            >
+                              Sign in
+                            </Link>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/sign-up"
+                              className={twMerge([
+                                active ? "bg-gray-100 bg-opacity-5" : "",
+                                "block px-4 py-2 text-sm text-gradient-yellow-900 hover:text-gradient-yellow-500",
+                              ])}
+                            >
+                              Sign up
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                </div>
+              </div>
             </div>
-          )}
-        </div>
-      </nav>
+
+            <Disclosure.Panel className="sm:hidden">
+              <div className="space-y-1 px-2 pb-3 pt-2">
+                {navigationLinks.map((item) => (
+                  <Disclosure.Button
+                    key={item.name}
+                    as="a"
+                    href={item.href}
+                    className={twMerge([
+                      item.current
+                        ? "bg-gray-900 text-white"
+                        : "text-gray-900 hover:text-[#246CF7]",
+                      "block rounded-md px-3 py-2 text-sm font-medium",
+                    ])}
+                    aria-current={item.current ? "page" : undefined}
+                  >
+                    {item.name}
+                  </Disclosure.Button>
+                ))}
+              </div>
+            </Disclosure.Panel>
+          </>
+        )}
+      </Disclosure>
     </div>
   );
-}
+};
 
 export default Main;

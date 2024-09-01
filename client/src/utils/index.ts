@@ -8,6 +8,7 @@ import { getCookie } from "./getCookie";
 import getWindowSize from "./getWindowSize";
 import { isLoggedInUser } from "./isLoggedInUser";
 import { isValueInSessionStorage } from "./isValueInSessionStorage";
+import { roundToDecimal } from "./roundToDecimal";
 
 export {
   convertToBase64,
@@ -20,5 +21,6 @@ export {
   getWindowSize,
   isLoggedInUser,
   isValueInSessionStorage,
+  roundToDecimal,
   sendEmail,
 };

@@ -1,7 +1,7 @@
 import { twMerge } from "tailwind-merge";
+import Footer from "../../components/Footer";
 import LandingNavbar from "../../components/LandingNavbar";
 import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
 
 interface SideMenuLayoutsProps {
   children: React.ReactElement | React.ReactElement[];
@@ -14,7 +14,7 @@ const Main = (props: SideMenuLayoutsProps) => {
   return (
     <div>
       {props.landing ? <LandingNavbar /> : <Navbar />}
-      <div className="h-[136px]"></div>
+      <div className="h-0"></div>
       <div
         className={twMerge([
           "content transform duration-500 ease-in-out",
@@ -23,7 +23,7 @@ const Main = (props: SideMenuLayoutsProps) => {
       >
         {props.children}
         {props.footer && (
-          <div className="-mx-5 -mb-5 mt-10">
+          <div className="-mx-5 -mb-5">
             <Footer />
           </div>
         )}
