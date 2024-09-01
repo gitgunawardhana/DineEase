@@ -1,8 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import { twMerge } from "tailwind-merge";
+import LucideIcon from "../../base-components/LucideIcon";
+import { Icons } from "../../constants";
 import ReviewCard from "./Card";
 
 interface Review {
   name: string;
+  post: string;
   rate: string;
   review: string;
   image: string;
@@ -15,83 +21,119 @@ interface ReviewCardComponentProps {
 const ReviewCardComponent: React.FC<ReviewCardComponentProps> = ({
   reviews,
 }) => {
-  const viewerRef = useRef<HTMLDivElement>(null);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [slidesToShow, setSlidesToShow] = useState(3);
 
-  const scrollLeft = () => {
-    if (viewerRef.current) {
-      viewerRef.current.scrollBy({
-        left: -300,
-        behavior: "smooth",
-      });
-      setCurrentPage((prevPage) => prevPage - 1);
+  const updateSlidesToShow = () => {
+    const width = window.innerWidth;
+    if (width < 640) {
+      setSlidesToShow(1);
+    } else if (width < 1024) {
+      setSlidesToShow(2);
+    } else {
+      setSlidesToShow(3);
     }
   };
 
-  const scrollRight = () => {
-    if (viewerRef.current) {
-      viewerRef.current.scrollBy({
-        left: 300,
-        behavior: "smooth",
-      });
-      setCurrentPage((prevPage) => prevPage + 1);
+  useEffect(() => {
+    updateSlidesToShow();
+    window.addEventListener("resize", updateSlidesToShow);
+    return () => window.removeEventListener("resize", updateSlidesToShow);
+  }, []);
+
+  const next = () => {
+    if (currentIndex < reviews.length - slidesToShow) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
+
+  const prev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
     }
   };
 
   return (
     <>
-      <div className="grid items-center md:flex md:items-center">
-        <button
-          className={`rounded-l p-5 focus:outline-none ${
-            currentPage === 0 ? "cursor-not-allowed opacity-50" : ""
-          }`}
-          onClick={scrollLeft}
-          disabled={currentPage === 0}
-        >
-          &lt;
-        </button>
-        <div className="flex space-x-4 overflow-hidden" ref={viewerRef}>
-          {reviews.map((review: Review, index: number) => (
+      <div className="m-auto w-full">
+        <div className="relative mt-20">
+          <div className="overflow-hidden">
             <div
-              key={index}
-              className={`${
-                index === currentPage ? "scale-100" : "scale-90"
-              } w-full flex-none transform transition-transform
-              lg:w-1/3`}
+              className="flex transition-transform duration-1000"
+              style={{
+                transform: `translateX(-${
+                  (100 / slidesToShow) * currentIndex
+                }%)`,
+              }}
             >
-              <ReviewCard review={review} />
+              {reviews.length > 0 &&
+                reviews.map((review: Review, index: number) => (
+                  <div
+                    key={index}
+                    className={`relative w-full flex-none p-2 sm:w-1/2 md:w-1/3`}
+                    style={{ minWidth: `${100 / slidesToShow}%` }}
+                  >
+                    <div
+                      className={
+                        currentIndex + 1 === index
+                          ? "scale-90 transform transition-all"
+                          : "-translate-y-16 scale-75 transform transition-all"
+                      }
+                    >
+                      <ReviewCard review={review} />
+                    </div>
+                  </div>
+                ))}
             </div>
-          ))}
-        </div>
-        <button
-          className={`${
-            currentPage === reviews.length - 1
-              ? "cursor-not-allowed opacity-50"
-              : ""
-          } rounded-r p-5
-          focus:outline-none`}
-          onClick={scrollRight}
-          disabled={currentPage === reviews.length - 1}
-        >
-          &gt;
-        </button>
-      </div>
-      <br />
-      <div className="grid items-center justify-center">
-        <div className="mt-2 flex space-x-2">
-          {reviews.map((_, index) => (
-            <>
-              <br />
-              <div
-                key={index}
-                className={`${
-                  index === currentPage ? "bg-black" : "bg-gray-900"
-                } h-2 w-2
-                rounded-full`}
-                onClick={() => setCurrentPage(index)}
-              ></div>
-            </>
-          ))}
+          </div>
+
+          <button
+            className={twMerge([
+              "absolute left-0 top-1/2 -translate-y-1/2 transform p-2 text-white opacity-100",
+              currentIndex === 0 && "opacity-20",
+            ])}
+            onClick={prev}
+            disabled={currentIndex === 0}
+          >
+            <LucideIcon
+              icon={Icons.CHEVRONSLEFT}
+              strokeWidth={4}
+              color="#FF9224"
+            />
+          </button>
+          <button
+            className={twMerge([
+              "absolute right-0 top-1/2 -translate-y-1/2 transform p-2 text-white",
+              currentIndex === reviews.length - slidesToShow && "opacity-20",
+            ])}
+            onClick={next}
+            disabled={currentIndex === reviews.length - slidesToShow}
+          >
+            <LucideIcon
+              icon={Icons.CHEVRONSRIGHT}
+              strokeWidth={4}
+              color="#FF9224"
+            />
+          </button>
+
+          <div className="mt-4 flex justify-center">
+            {reviews.length > 0 &&
+              Array(Math.ceil(reviews.length - (slidesToShow - 1)))
+                .fill(0)
+                .map((_, index) => (
+                  <button
+                    key={index}
+                    className={`mx-1 h-1 w-2 rounded-full ${
+                      index === currentIndex
+                        ? "w-10 transform bg-gradient-yellow-900 transition-all"
+                        : "bg-gradient-yellow-900"
+                    }`}
+                    onClick={() => {
+                      setCurrentIndex(index);
+                    }}
+                  />
+                ))}
+          </div>
         </div>
       </div>
     </>

@@ -22,6 +22,9 @@ enum Icons {
   MOREVERTICAL = "MoreVertical",
   EYE = "Eye",
   EYEOFF = "EyeOff",
+  CHEVRONSLEFT = "ChevronsLeft",
+  CHEVRONSRIGHT = "ChevronsRight",
+  START = "Star",
 }
 
 export default Icons;

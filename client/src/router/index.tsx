@@ -175,7 +175,7 @@ function Router() {
     {
       path: "/about-us",
       element: (
-        <TopLayout className="!overflow-hidden" footer>
+        <TopLayout className="!overflow-hidden">
           <About />
         </TopLayout>
       ),
@@ -191,7 +191,7 @@ function Router() {
     {
       path: "/location",
       element: (
-        <TopLayout className="!overflow-hidden" footer>
+        <TopLayout className="!overflow-hidden">
           <Location />
         </TopLayout>
       ),

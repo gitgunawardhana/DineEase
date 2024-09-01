@@ -6,7 +6,8 @@ import Icon_04 from "../../assets/images/HomePage/image 65.png";
 
 interface Review {
   name: string;
-  rate:string;
+  post: string;
+  rate: string;
   review: string;
   image: string;
 }
@@ -17,27 +18,34 @@ interface ReviewCardProps {
 
 const Card: React.FC<ReviewCardProps> = ({ review }) => {
   return (
-    <div className="rounded-3xl p-4 bg-gradient-to-br from-yellow-950 to-Emerald-950 content-center items-center">
-      <div className="justify-center items-center flex">
-        {review.image && <img src={review.image} alt={review.name} className="h-auto w-3/5" />}
-      </div><br />
-      <div className="justify-center items-center flex">
-      <img src={review.rate} />
+    <div className="to-Emerald-950 content-center items-center rounded-3xl bg-gradient-to-br from-yellow-950 px-4 py-10">
+      <div className="flex items-center justify-center">
+        {review.image && (
+          <img
+            src={review.image}
+            alt={review.name}
+            className="m-auto h-48 w-48 rounded-full object-cover"
+          />
+        )}
       </div>
-      
+      <p className="m-auto mt-4 text-xl font-black uppercase tracking-widest text-[#FF9224]">
+        {review.name}
+      </p>
+      <p className=" m-auto mt-2 !bg-gradient-to-b !from-gradient-yellow-100 !to-gradient-yellow-900 bg-clip-text px-10 text-center text-sm font-normal leading-relaxed tracking-widest text-transparent">
+        {review.post}
+      </p>
       <br />
-      <p className="text-amber-500 uppercase font-black tracking-widest text-2xl">{review.name}</p>
+      <p className=" !bg-gradient-to-b !from-gradient-yellow-100 !to-gradient-yellow-900 bg-clip-text p-4 px-10 text-justify text-sm font-normal leading-relaxed tracking-widest text-transparent">
+        {review.review}
+      </p>
       <br />
-
-      <p className="text-amber-100 tracking-widest  px-10">{review.review}</p><br />
-     
-      <div className="flex p-5 justify-evenly items-center w-full">
-      <img src={Icon_01} />
-      <img src={Icon_02}/>
-      <img src={Icon_03} />
-      <img src={Icon_04}/>
+      <br />
+      <div className="flex w-full items-center justify-center gap-5">
+        <img src={Icon_01} className="h-7 w-7 object-cover" />
+        <img src={Icon_02} className="h-7 w-7 object-cover" />
+        <img src={Icon_03} className="h-7 w-7 object-cover" />
+        <img src={Icon_04} className="h-7 w-7 object-cover" />
       </div>
-      
     </div>
   );
 };
