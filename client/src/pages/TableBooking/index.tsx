@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { twMerge } from "tailwind-merge";
-import TableBookingHeadingTitle from "../../assets/images/tableBookingHeadingTitle.svg";
+import TableBookingHeadingTitle from "../../assets/images/TableBookingHeadingTitle.svg";
 import { Button } from "../../base-components/Button";
 import InputField from "../../base-components/FormElements/InputElement";
 import MuiDateTimePicker from "../../components/MuiDateTimePicker";
