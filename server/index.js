@@ -12,6 +12,14 @@ dotenv.config();
 
 // middleware
 app.use(cors());
+// update with vercel CORS issue
+// app.use(
+//   cors({
+//     origin: ["https://dine-ease-view.vercel.app"], // Allow specific frontend
+//     methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
+//     credentials: true, // Allow credentials if necessary (like cookies)
+//   })
+// );
 app.use(morgan("tiny"));
 app.use(cookieParser());
 app.use(express.json({ limit: "50mb" }));
