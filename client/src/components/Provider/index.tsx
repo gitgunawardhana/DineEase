@@ -9,6 +9,8 @@ import {
 } from "react";
 import { getWindowSize } from "../../utils";
 
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
+
 type WindowSize = {
   width: number;
   height: number;
@@ -36,14 +38,14 @@ export interface ProviderContextInterface {
   setModalIsOpen: Dispatch<SetStateAction<boolean>>;
   count: number;
   setCount: Dispatch<SetStateAction<number>>;
-  userId : string;
+  userId: string;
   setUserId: Dispatch<SetStateAction<string>>;
-  userAddress : string;
+  userAddress: string;
   setUserAddress: Dispatch<SetStateAction<string>>;
   addressEntered: boolean;
   setAddressEntered: Dispatch<SetStateAction<boolean>>;
-  orderId:string;
-  setOrderId:Dispatch<SetStateAction<string>>;
+  orderId: string;
+  setOrderId: Dispatch<SetStateAction<string>>;
 }
 
 const defaultState = {
@@ -68,7 +70,7 @@ interface ProviderProps {
 
 export const refreshToken = async () => {
   try {
-    const res = await axios.post("http://localhost:8000/api/auth/refresh", {
+    const res = await axios.post(`${BACKEND_BASE_URL}/api/auth/refresh`, {
       refreshToken: sessionStorage.getItem("refreshToken"),
     });
     const newTokens = res.data;
@@ -89,7 +91,7 @@ const Provider = (props: ProviderProps) => {
   });
 
   const axiosJWT = axios.create({
-    baseURL: "http://localhost:8000/api",
+    baseURL: `${BACKEND_BASE_URL}/api`,
   });
 
   useEffect(() => {
@@ -137,7 +139,7 @@ const Provider = (props: ProviderProps) => {
 
   const fetchData = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/products/product");
+      const res = await fetch(`${BACKEND_BASE_URL}/api/products/product`);
       const json = await res.json();
       setProducts(json.data);
     } catch (error) {
@@ -145,40 +147,43 @@ const Provider = (props: ProviderProps) => {
     }
   };
 
-  if(sessionStorage.email){
-  
+  if (sessionStorage.email) {
     // If email is present, fetch user data based on email and get userCode
     const fetchAllUsers = async () => {
-  try {
-    // Send a request to fetch all users
-    const response = await axios.get("http://localhost:8000/api/user/get-all-users");
-    
-    if (response.status === 200) {
-      // Assuming the response contains an array of user objects
-      const allUsers = response.data;
-      
-      // Filter users based on the session storage email
-      const filteredUsers = allUsers.filter((user: { email: any; }) => user.email === sessionStorage.email);
-      
-      if (filteredUsers.length > 0) {
-        // User with matching email found
-        const userData = filteredUsers[0]; // Assuming only one user matches
-        console.log(userData.userCode);
-        setUserId(userData.userCode); // Assign userCode to the user variable
-      } else {
-        // User with matching email not found
-        console.log('User with email not found');
-      }
-    } else {
-      console.log('Failed to fetch all users');
-    }
-  } catch (error) {
-    console.error('Error fetching all users', error);
-  } 
-};
+      try {
+        // Send a request to fetch all users
+        const response = await axios.get(
+          `${BACKEND_BASE_URL}/api/user/get-all-users`
+        );
 
-// Call the fetchAllUsers function to fetch all users and filter by email
-fetchAllUsers();
+        if (response.status === 200) {
+          // Assuming the response contains an array of user objects
+          const allUsers = response.data;
+
+          // Filter users based on the session storage email
+          const filteredUsers = allUsers.filter(
+            (user: { email: any }) => user.email === sessionStorage.email
+          );
+
+          if (filteredUsers.length > 0) {
+            // User with matching email found
+            const userData = filteredUsers[0]; // Assuming only one user matches
+            console.log(userData.userCode);
+            setUserId(userData.userCode); // Assign userCode to the user variable
+          } else {
+            // User with matching email not found
+            console.log("User with email not found");
+          }
+        } else {
+          console.log("Failed to fetch all users");
+        }
+      } catch (error) {
+        console.error("Error fetching all users", error);
+      }
+    };
+
+    // Call the fetchAllUsers function to fetch all users and filter by email
+    fetchAllUsers();
   }
 
   useEffect(() => {

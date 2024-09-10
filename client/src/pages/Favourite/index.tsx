@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { Button } from "../../base-components/Button";
 import MuiRating from "../../components/MuiRating";
-import axios from "axios";
-import { Link } from "react-router-dom";
 
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
 
 const index = () => {
-  const [favourites, setFavourites] = useState([]);
+  const [favourites, setFavourites] = useState<any[]>([]);
 
   const fetchCategories = async () => {
     try {
       const email = sessionStorage.email;
       const response = await axios.post(
-        "http://localhost:8000/api/favourite/viewFavourites",
+        `${BACKEND_BASE_URL}/api/favourite/viewFavourites`,
         { email }
       );
       if (response.data.data) {
@@ -31,14 +31,18 @@ const index = () => {
   return (
     <div>
       <div className="mx-5 mb-8 mt-8 flex flex-col gap-2 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
-      <h1 className="mb-2 !bg-gradient-to-r from-gradient-yellow-500 to-gradient-yellow-900 bg-clip-text font-extrabold !capitalize text-transparent md:text-3xl">
-        &nbsp; &nbsp;Favourite Items</h1>
+        <h1 className="mb-2 !bg-gradient-to-r from-gradient-yellow-500 to-gradient-yellow-900 bg-clip-text font-extrabold !capitalize text-transparent md:text-3xl">
+          &nbsp; &nbsp;Favourite Items
+        </h1>
         <div className="flex">
-        {favourites.map((favorite) => (
-          <Card key={favorite._id} favorite={favorite} fetchCategories={fetchCategories} />
-        ))}
+          {favourites.map((favorite) => (
+            <Card
+              key={favorite._id}
+              favorite={favorite}
+              fetchCategories={fetchCategories}
+            />
+          ))}
         </div>
-        
       </div>
     </div>
   );
@@ -46,7 +50,12 @@ const index = () => {
 
 export default index;
 
-function Card({ favorite , fetchCategories }) {
+interface CardProps {
+  favorite: any; // or any other appropriate type
+  fetchCategories: any; // Update the return type and params as per your function
+}
+
+function Card({ favorite, fetchCategories }: CardProps) {
   const customStyles = {
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.7)",
@@ -55,7 +64,7 @@ function Card({ favorite , fetchCategories }) {
     content: {
       top: "50%",
       left: "50%",
-      width:"100%",
+      width: "100%",
       transform: "translate(-50%, -50%)",
       padding: "20px",
       border: "2px",
@@ -74,17 +83,19 @@ function Card({ favorite , fetchCategories }) {
       "Are you sure you want to delete this item?"
     );
     if (confirmDelete) {
-    try {
-      const response = await axios.post(`http://localhost:8000/api/favourite/deleteFavourites/${_id}`);
-  
-      if (response.status === 201) {
-        alert('Product removed from favorites!');
-        fetchCategories();
+      try {
+        const response = await axios.post(
+          `${BACKEND_BASE_URL}/api/favourite/deleteFavourites/${_id}`
+        );
+
+        if (response.status === 201) {
+          alert("Product removed from favorites!");
+          fetchCategories();
+        }
+      } catch (error) {
+        console.error("Error removing from favorites:", error);
       }
-    } catch (error) {
-      console.error('Error removing from favorites:', error);
     }
-  }
   };
 
   useEffect(() => {
@@ -94,7 +105,7 @@ function Card({ favorite , fetchCategories }) {
   return (
     <div
       key={_id}
-      className="mb-0 max-w-sm mr-48 ml-14 overflow-hidden rounded-xl !bg-opacity-25 bg-gradient-to-b from-gradient-yellow-100-15 to-gradient-yellow-900-10 text-center shadow-lg"
+      className="mb-0 ml-14 mr-48 max-w-sm overflow-hidden rounded-xl !bg-opacity-25 bg-gradient-to-b from-gradient-yellow-100-15 to-gradient-yellow-900-10 text-center shadow-lg"
     >
       <img className="w-full" src={favourite.image} alt={favourite.name} />
       <div className="mb-0 ml-5 mt-2 flex">
@@ -124,7 +135,8 @@ function Card({ favorite , fetchCategories }) {
               View Product
             </p>
           </Button>
-          <br/><br/>
+          <br />
+          <br />
           <Button
             as={NavLink}
             onClick={removeFavourites}

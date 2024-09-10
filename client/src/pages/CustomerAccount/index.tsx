@@ -31,7 +31,7 @@ export interface Order {
   id: string;
   orderCode: string;
   status: string;
-  payment:string;
+  payment: string;
   items: Array<{
     _id: string; // Assuming each item has an _id
     name: string; // Add other properties of the item here
@@ -80,6 +80,8 @@ interface PasswordForm {
   currentPassword: string | undefined;
   newPassword: string | undefined;
 }
+
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
 
 const Main = () => {
   const { axiosJWT } = useContext(ProviderContext);
@@ -160,7 +162,7 @@ const Main = () => {
 
   // const fetchData = async () => {
   //   try {
-  //     const res = await fetch("http://localhost:8000/api/order/vieworder");
+  //     const res = await fetch(`${BACKEND_BASE_URL}/api/order/vieworder`);
   //     const json = await res.json();
   //     setOrders(json.data);
   //   } catch (error) {
@@ -171,7 +173,7 @@ const Main = () => {
   const fetchData = async () => {
     try {
       // Fetch the orders from the API
-      const res = await fetch("http://localhost:8000/api/order/vieworder");
+      const res = await fetch(`${BACKEND_BASE_URL}/api/order/vieworder`);
       const json = await res.json();
 
       // Assuming you have the userId you want to filter by
@@ -577,38 +579,38 @@ const Main = () => {
                           Rs. {order.amount}
                         </td>
                         <td className="whitespace-nowrap px-6 py-4 text-sm leading-5 text-gray-800">
-                            {order.payment === "COD" && (
-                              <p className="w-2/3 rounded-2xl bg-gray-900 text-white p-1 text-xs tracking-wide text-blue-950 text-center">
-                                COD
-                              </p>
-                            )}
-                            {order.payment === "Card" && (
-                             <p className="w-2/3 rounded-2xl bg-violet-800 text-white p-1 text-xs tracking-wide text-green-950 text-center">
-                             CARD
-                           </p>
-                            )}
+                          {order.payment === "COD" && (
+                            <p className="w-2/3 rounded-2xl bg-gray-900 p-1 text-center text-xs tracking-wide text-blue-950 text-white">
+                              COD
+                            </p>
+                          )}
+                          {order.payment === "Card" && (
+                            <p className="w-2/3 rounded-2xl bg-violet-800 p-1 text-center text-xs tracking-wide text-green-950 text-white">
+                              CARD
+                            </p>
+                          )}
                         </td>
                         <td className="whitespace-nowrap px-6 py-4 text-center text-sm leading-5 text-gray-800">
                           <div className="flex items-center justify-center">
-                          {order.status === "Pending" && (
+                            {order.status === "Pending" && (
                               <p className="w-2/3 rounded-2xl bg-blue-400 p-1 text-xs tracking-wide text-blue-950">
                                 Pending
                               </p>
                             )}
                             {order.status === "Delivered" && (
-                             <p className="w-2/3 rounded-2xl bg-green-400 p-1 text-xs tracking-wide text-green-950">
-                             Delivered
-                           </p>
+                              <p className="w-2/3 rounded-2xl bg-green-400 p-1 text-xs tracking-wide text-green-950">
+                                Delivered
+                              </p>
                             )}
                             {order.status === "Cancelled" && (
-                             <p className="w-2/3 rounded-2xl bg-red-500 p-1 text-xs tracking-wide text-red-950">
-                             Cancelled
-                           </p>
+                              <p className="w-2/3 rounded-2xl bg-red-500 p-1 text-xs tracking-wide text-red-950">
+                                Cancelled
+                              </p>
                             )}
                             {order.status === "Processing" && (
-                             <p className="w-2/3 rounded-2xl bg-yellow-500 p-1 text-xs tracking-wide text-red-950">
-                             Processing
-                           </p>
+                              <p className="w-2/3 rounded-2xl bg-yellow-500 p-1 text-xs tracking-wide text-red-950">
+                                Processing
+                              </p>
                             )}
                           </div>
                         </td>

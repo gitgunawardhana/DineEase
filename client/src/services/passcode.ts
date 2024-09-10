@@ -2,11 +2,13 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { decryptPasscode, encryptPasscode } from "../utils";
 
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
+
 export const checkExpiration = async (passcode: string) => {
   try {
     if (passcode === decryptPasscode(sessionStorage.getItem("temp")!)) {
       const res = await axios.get(
-        `http://localhost:8000/api/passcode/check-expiration/${passcode}`
+        `${BACKEND_BASE_URL}/api/passcode/check-expiration/${passcode}`
       );
       if (!res.data.expired) {
         return "success";
@@ -24,7 +26,7 @@ export const checkExpiration = async (passcode: string) => {
 export const createPasscode = async (data: any) => {
   try {
     const res = await axios.post(
-      "http://localhost:8000/api/passcode/create",
+      `${BACKEND_BASE_URL}/api/passcode/create`,
       data
     );
     console.log("data.passcode ", data.passcode);

@@ -21,6 +21,8 @@ interface User {
   mobileNo: string;
 }
 
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
+
 const Main = () => {
   const navigate = useNavigate();
   const [orderDetails, setOrderDetails] = useState({
@@ -49,7 +51,7 @@ const Main = () => {
       console.log("order cosw", orderCode);
       // Make an API request to fetch order details using the orderId
       const orderResponse = await fetch(
-        `http://localhost:8000/api/order/getbyid`,
+        `${BACKEND_BASE_URL}/api/order/getbyid`,
         {
           method: "POST", // Use POST method to send the orderCode in the request body
           headers: {
@@ -81,7 +83,7 @@ const Main = () => {
       const email = user;
       // Make an API request to fetch user details using the userId
       const userResponse = await fetch(
-        `http://localhost:8000/api/user/get-user-email`,
+        `${BACKEND_BASE_URL}/api/user/get-user-email`,
         {
           method: "POST", // Use GET method to send the email as a query parameter
           headers: {
@@ -119,7 +121,7 @@ const Main = () => {
     try {
       console.log("Fetching address details for orderId:", orderCode);
       const orderResponse = await fetch(
-        `http://localhost:8000/api/address/getAddressByID`,
+        `${BACKEND_BASE_URL}/api/address/getAddressByID`,
         {
           method: "POST",
           headers: {
@@ -168,10 +170,7 @@ const Main = () => {
         payment: "COD",
       };
 
-      await axios.put(
-        `http://localhost:8000/api/order/updateOrder`,
-        updateData
-      );
+      await axios.put(`${BACKEND_BASE_URL}/api/order/updateOrder`, updateData);
 
       console.log("Order status updated successfully!");
       window.alert("Order placed in COD");
