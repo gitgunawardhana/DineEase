@@ -1,12 +1,14 @@
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import ReactModal from "react-modal";
+import { NavLink, useParams } from "react-router-dom";
 import { Button } from "../../base-components/Button";
 import InputField from "../../base-components/FormElements/InputElement";
 import CheckBoxSetResponsive from "../../components/CheckBoxSetResponsive";
 import CustomizePageCards from "../../components/CustomizePageCards";
-import React, { useContext, useEffect, useState } from "react";
-import { useParams, NavLink } from "react-router-dom";
 import { Product, ProviderContext } from "../../components/Provider";
-import ReactModal from "react-modal";
-import axios from "axios";
+
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
 
 const customStyles = {
   overlay: {
@@ -150,7 +152,7 @@ const addFrenchFries = [
 const Main = () => {
   const { products } = useContext(ProviderContext);
   const { productName } = useParams<{ productName?: string }>();
-  const {userId, setUserId} = useContext(ProviderContext);
+  const { userId, setUserId } = useContext(ProviderContext);
 
   if (!productName) {
     return <div>Product not found.</div>;
@@ -304,54 +306,56 @@ const Main = () => {
 
   const email = sessionStorage.email;
 
-  if(!email){
+  if (!email) {
     user = userId;
     console.log("user w", user);
-  }else {
+  } else {
     // If email is present, fetch user data based on email and get userCode
     const fetchAllUsers = async () => {
-  try {
-    // Send a request to fetch all users
-    const response = await axios.get("http://localhost:8000/api/user/get-all-users");
-    
-    if (response.status === 200) {
-      // Assuming the response contains an array of user objects
-      const allUsers = response.data;
-      
-      // Filter users based on the session storage email
-      const filteredUsers = allUsers.filter((user: { email: any; }) => user.email === sessionStorage.email);
-      
-      if (filteredUsers.length > 0) {
-        // User with matching email found
-        const userData = filteredUsers[0]; // Assuming only one user matches
-        user = userData.userCode;
-        console.log( "User s",user);
-        setUserId(user); // Assign userCode to the user variable
-      } else {
-        // User with matching email not found
-        console.log('User with email not found');
-      }
-    } else {
-      console.log('Failed to fetch all users');
-    }
-  } catch (error) {
-    console.error('Error fetching all users', error);
-  } 
-};
+      try {
+        // Send a request to fetch all users
+        const response = await axios.get(
+          `${BACKEND_BASE_URL}/api/user/get-all-users`
+        );
 
-// Call the fetchAllUsers function to fetch all users and filter by email
-fetchAllUsers();
+        if (response.status === 200) {
+          // Assuming the response contains an array of user objects
+          const allUsers = response.data;
+
+          // Filter users based on the session storage email
+          const filteredUsers = allUsers.filter(
+            (user: { email: any }) => user.email === sessionStorage.email
+          );
+
+          if (filteredUsers.length > 0) {
+            // User with matching email found
+            const userData = filteredUsers[0]; // Assuming only one user matches
+            user = userData.userCode;
+            console.log("User s", user);
+            setUserId(user); // Assign userCode to the user variable
+          } else {
+            // User with matching email not found
+            console.log("User with email not found");
+          }
+        } else {
+          console.log("Failed to fetch all users");
+        }
+      } catch (error) {
+        console.error("Error fetching all users", error);
+      }
+    };
+
+    // Call the fetchAllUsers function to fetch all users and filter by email
+    fetchAllUsers();
   }
 
-
   const handleAddToCart = async () => {
-
     const customName = `${selectedProduct.name} Customized`;
     const totalP = selectedOptionsTotal + totalPrice;
     const customId = `${selectedProduct._id}cu`;
 
     // Send API request to add item to cart
-    const response = await fetch("http://localhost:8000/api/add_cart/cart", {
+    const response = await fetch(`${BACKEND_BASE_URL}/api/add_cart/cart`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -476,9 +480,10 @@ fetchAllUsers();
             </div>
             <div className="col-span-2 columns-2 justify-start text-start">
               <div>
-                <Button 
-                onClick={openModal} 
-                className="!rounded-[20px] border-none !bg-gradient-to-b from-gradient-yellow-500 to-gradient-yellow-900 !px-9 font-semibold uppercase text-black hover:text-black">
+                <Button
+                  onClick={openModal}
+                  className="!rounded-[20px] border-none !bg-gradient-to-b from-gradient-yellow-500 to-gradient-yellow-900 !px-9 font-semibold uppercase text-black hover:text-black"
+                >
                   Confirm Order
                 </Button>
                 <ReactModal

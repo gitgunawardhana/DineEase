@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
 import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { Button } from "../../base-components/Button";
 import { ProviderContext } from "../../components/Provider";
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
 interface CartItem {
   _id: string;
   name: string;
@@ -14,6 +12,8 @@ interface CartItem {
   quantity: number;
   category: string;
 }
+
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const CartPage = () => {
   const fetchCartData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/add_cart/getCart/${userId}`
+        `${BACKEND_BASE_URL}/api/add_cart/getCart/${userId}`
       );
       if (response.data.data) {
         setCartItems(response.data.data);
@@ -58,7 +58,7 @@ const CartPage = () => {
     if (confirmDelete) {
       try {
         await axios.delete(
-          `http://localhost:8000/api/add_cart/deleteItem/${itemId}`
+          `${BACKEND_BASE_URL}/api/add_cart/deleteItem/${itemId}`
         );
         console.log("Item deleted");
         fetchCartData();
@@ -72,7 +72,7 @@ const CartPage = () => {
     try {
       if (newQuantity >= 1) {
         await axios.put(
-          `http://localhost:8000/api/add_cart/updateCartItem/${itemId}`,
+          `${BACKEND_BASE_URL}/api/add_cart/updateCartItem/${itemId}`,
           {
             quantity: newQuantity,
           }
@@ -90,7 +90,7 @@ const CartPage = () => {
       const email = user;
       // Make an API request to fetch user details using the userId
       const userResponse = await fetch(
-        `http://localhost:8000/api/user/get-user-email`,
+        `${BACKEND_BASE_URL}/api/user/get-user-email`,
         {
           method: "POST", // Use GET method to send the email as a query parameter
           headers: {
@@ -119,7 +119,7 @@ const CartPage = () => {
     try {
       console.log("Fetching address details for orderId:", userCode);
       const orderResponse = await fetch(
-        `http://localhost:8000/api/address/getAddressByID`,
+        `${BACKEND_BASE_URL}/api/address/getAddressByID`,
         {
           method: "POST",
           headers: {
@@ -204,23 +204,20 @@ const CartPage = () => {
           quantity: cartItem.quantity,
         }));
 
-        const response = await fetch(
-          "http://localhost:8000/api/order/addOrder",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              id: userId,
-              email: email,
-              amount: finalTotal,
-              status: "Pending",
-              items: cartItems,
-              payment: "Card",
-            }),
-          }
-        );
+        const response = await fetch(`${BACKEND_BASE_URL}/api/order/addOrder`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: userId,
+            email: email,
+            amount: finalTotal,
+            status: "Pending",
+            items: cartItems,
+            payment: "Card",
+          }),
+        });
         if (response.status === 201 || response.status === 200) {
           // Handle success
           console.log("Success");
@@ -239,7 +236,7 @@ const CartPage = () => {
           setOrderId(responseData.orderId);
           console.log("O id", orderId);
           const clearCartResponse = await fetch(
-            "http://localhost:8000/api/add_cart/clearcart",
+            `${BACKEND_BASE_URL}/api/add_cart/clearcart`,
             {
               method: "POST",
               headers: {
@@ -278,7 +275,7 @@ const CartPage = () => {
     try {
       const email = user;
       const response = await axios.post(
-        "http://localhost:8000/api/order/get-order-count",
+        `${BACKEND_BASE_URL}/api/order/get-order-count`,
         { email }
       );
       setOrderCount(response.data.data);
@@ -431,22 +428,23 @@ const CartPage = () => {
                 <div className="text-[18px] text-amber-400">
                   <div>Rs. {total}.00</div>
                   <div>Rs. {finalTotal}.00</div>
-                </div></>
+                </div>
+              </>
             ) : (
               <>
                 <div className="px-24 text-amber-400"></div>
                 <div className="text-[18px] text-amber-400">
                   <div>Rs. {finalTotal}.00</div>
                 </div>
-                </>
+              </>
             )
           ) : (
             <>
-                <div className="px-24 text-amber-400"></div>
-                <div className="text-[18px] text-amber-400">
-                  <div>Rs. {finalTotal}.00</div>
-                </div>
-                </>
+              <div className="px-24 text-amber-400"></div>
+              <div className="text-[18px] text-amber-400">
+                <div>Rs. {finalTotal}.00</div>
+              </div>
+            </>
           )}
 
           <div className="">

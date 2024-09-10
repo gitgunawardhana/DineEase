@@ -2,6 +2,8 @@ import axios, { AxiosInstance } from "axios";
 import { NavigateFunction } from "react-router-dom";
 import Swal from "sweetalert2";
 
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
+
 export const handleRegistration = async (
   registrationData: {
     email: string;
@@ -14,7 +16,7 @@ export const handleRegistration = async (
 
   try {
     const res = await axios.post(
-      "http://localhost:8000/api/auth/register",
+      `${BACKEND_BASE_URL}/api/auth/register`,
       registrationData
     );
     Swal.fire({
@@ -52,7 +54,7 @@ export const handleLogin = async (
 ) => {
   try {
     const res = await axios.post(
-      "http://localhost:8000/api/auth/login",
+      `${BACKEND_BASE_URL}/api/auth/login`,
       loginData
     );
 

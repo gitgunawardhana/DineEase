@@ -1,6 +1,8 @@
 import axios, { AxiosInstance } from "axios";
 import Swal from "sweetalert2";
 
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
+
 export const getCurrentUser = async (
   axiosJWT: AxiosInstance,
   user: any,
@@ -84,7 +86,7 @@ export const updateCurrentUser = async (
 export const resetPassword = async (axiosJWT: AxiosInstance, data: any) => {
   try {
     const res = await axiosJWT.post(
-      "http://localhost:8000/api/user/reset-password",
+      `${BACKEND_BASE_URL}/api/user/reset-password`,
       data,
       {
         headers: {
@@ -122,7 +124,7 @@ export const checkIfEmailExists = async (
 ) => {
   try {
     const res = await axios.post(
-      `http://localhost:8000/api/user/check-if-email-exists?email=${email}`
+      `${BACKEND_BASE_URL}/api/user/check-if-email-exists?email=${email}`
     );
     if (res.data.message === "User found") {
       setIsValidEmail(true);
@@ -149,7 +151,7 @@ export const checkIfEmailExists = async (
 export const updatePassword = async (email: string, newPassword: string) => {
   try {
     const res = await axios.post(
-      `http://localhost:8000/api/user/update-password`,
+      `${BACKEND_BASE_URL}/api/user/update-password`,
       { email, newPassword }
     );
     if (res.data.message === "Password reset successful") {

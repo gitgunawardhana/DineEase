@@ -1,16 +1,7 @@
 import axios from "axios";
-import { useContext, useState, useEffect } from "react";
-import ReactModal from "react-modal";
-import { NavLink } from "react-router-dom";
-import BeveragesIcon from "../../assets/categoryIcon/BeveragesIcon.svg";
-import BurgerIcon from "../../assets/categoryIcon/BurgerIcon.svg";
-import MeatIcon from "../../assets/categoryIcon/MeatIcon.svg";
-import NoodlesIcon from "../../assets/categoryIcon/NoodlesIcon.svg";
-import OurSpecialsIcon from "../../assets/categoryIcon/OurSpecialsIcon.svg";
-import PastaIcon from "../../assets/categoryIcon/PastaIcon.svg";
+import { useContext, useEffect, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import Cart from "../../assets/icons/Cart.svg";
-import DecreaseButton from "../../assets/icons/DecreaseButton.svg";
-import IncreaseButton from "../../assets/icons/IncreaseButton.svg";
 import Order1 from "../../assets/images/Orders/Order1.svg";
 import Order2 from "../../assets/images/Orders/hotdog.jpeg";
 import Order3 from "../../assets/images/Orders/sandwich.jpeg";
@@ -22,7 +13,8 @@ import MuiRating from "../../components/MuiRating";
 import { Product, ProviderContext } from "../../components/Provider";
 import TextLimit from "../../components/TextLimit";
 import SearchBar from "./../../components/SearchBar/SearchBar";
-import { Link } from "react-router-dom";
+
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
 
 interface CartItem {
   _id: string;
@@ -48,21 +40,20 @@ let subTotal = 0;
 const Main = () => {
   const { products, selectedCategory } = useContext(ProviderContext);
 
-  const [categories, setCategories] = useState<Category[]>([]); 
+  const [categories, setCategories] = useState<Category[]>([]);
 
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/category/viewcategory"
+        `${BACKEND_BASE_URL}/api/category/viewcategory`
       );
       if (response.data.data) {
-        setCategories([{ _id: 'all', category: 'All' }, ...response.data.data]);
-       console.log("Success");
+        setCategories([{ _id: "all", category: "All" }, ...response.data.data]);
+        console.log("Success");
       }
       console.log("Error fetching cart data");
     } catch (error) {
       console.error("Error fetching cart data:", error);
-      
     }
   };
 
@@ -187,7 +178,7 @@ const Main = () => {
 
 export default Main;
 
-function Category(item: { category: string; }) {
+function Category(item: { category: string }) {
   const { setSelectedCategory } = useContext(ProviderContext);
 
   const handleCategoryClick = (categoryTitle: string) => {
@@ -221,8 +212,6 @@ function Card(item: {
   rate: number;
   category: string;
 }) {
-
-
   const customStyles = {
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.7)", // Add background overlay color and opacity
@@ -246,7 +235,7 @@ function Card(item: {
   const fetchCartData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/add_cart/getCart"
+        `${BACKEND_BASE_URL}/api/add_cart/getCart`
       );
       if (response.data.data) {
         const totalPrice = response.data.data.reduce(
@@ -261,25 +250,55 @@ function Card(item: {
     }
   };
 
+  
+  const [imageStyle, setImageStyle] = useState({
+    width: "100%",
+    height: "250px", // Default height for non-web view
+  });
+
+  useEffect(() => {
+    const updateImageStyle = () => {
+      if (window.innerWidth >= 768) {
+        setImageStyle((prevStyle) => ({
+          ...prevStyle,
+          height: "150px", // Adjusted height for web view
+        }));
+      } else {
+        setImageStyle((prevStyle) => ({
+          ...prevStyle,
+          height: "250px", // Default height for smaller screens
+        }));
+      }
+    };
+
+    updateImageStyle();
+
+    window.addEventListener("resize", updateImageStyle);
+
+    return () => {
+      window.removeEventListener("resize", updateImageStyle);
+    };
+  }, []);
+
   return (
     <div
       key={item.name}
       className="mb-0 max-w-sm overflow-hidden rounded-xl !bg-opacity-25 bg-gradient-to-b from-gradient-yellow-100-15 to-gradient-yellow-900-10 text-center shadow-lg"
     >
-      <img  style={{
-      height: '250px',  // Set a constant height for non-web view
-      width: '100%',    // Let the width adjust accordingly
-      '@media (min-width: 768px)': {
-        height: '150px', // Adjust the height for web view (example value)
-      },
-    }}
-    className="w-full" src={item.image} alt={item.name} />
+      <img
+        style={imageStyle}
+        className="w-full"
+        src={item.image}
+        alt={item.name}
+      />
       <div className="mb-0 ml-5 mt-2 flex">
         <MuiRating rateValue={item.rate} productId={item._id} active={false} />
       </div>
       <div className="px-6 pb-4 pt-2">
         <h1 className="mb-2 !bg-gradient-to-r from-gradient-yellow-500 to-gradient-yellow-900 bg-clip-text font-extrabold !capitalize text-transparent md:text-lg">
-        <Link to={`/product/${encodeURIComponent(item.name)}`}>{item.name}</Link>
+          <Link to={`/product/${encodeURIComponent(item.name)}`}>
+            {item.name}
+          </Link>
         </h1>
         <div>
           <p className="!bg-gradient-to-r from-gradient-yellow-500 to-gradient-yellow-900 bg-clip-text text-sm font-normal text-transparent">
@@ -290,20 +309,23 @@ function Card(item: {
           </p>
         </div>
         <div className="mt-2">
+          {item.category == "Burger" ||
+          item.category === "Shawarma" ||
+          item.category === "Hotdog" ||
+          item.category === "Submarine" ? (
+            <Button
+              as={NavLink}
+              to={`/customize-page/${item.name}`}
+              className="m-0 !mb-2 !mt-1 min-w-[200px] !rounded-[10px] border-none !bg-opacity-20 !bg-gradient-to-b from-gradient-yellow-900-6 to-gradient-yellow-900-2 !px-5 !py-2 text-xs font-semibold uppercase text-black hover:text-black md:!px-5 md:py-2 md:text-sm"
+            >
+              <p className="!bg-gradient-to-b from-gradient-yellow-500 to-gradient-yellow-900 bg-clip-text text-transparent">
+                customize
+              </p>
+            </Button>
+          ) : (
+            <div></div>
+          )}
 
-          {item.category=="Burger" || item.category === "Shawarma" || item.category === "Hotdog" || item.category === "Submarine" ?(<Button
-            as={NavLink}
-            to={`/customize-page/${item.name}`}
-            className="m-0 !mb-2 !mt-1 min-w-[200px] !rounded-[10px] border-none !bg-opacity-20 !bg-gradient-to-b from-gradient-yellow-900-6 to-gradient-yellow-900-2 !px-5 !py-2 text-xs font-semibold uppercase text-black hover:text-black md:!px-5 md:py-2 md:text-sm"
-          >
-            <p className="!bg-gradient-to-b from-gradient-yellow-500 to-gradient-yellow-900 bg-clip-text text-transparent">
-              customize
-            </p>
-          </Button>):(
-          <div>
-
-          </div>)}
-          
           <br />
           <Button
             as={NavLink}
@@ -329,9 +351,9 @@ function OrderMenuSection() {
           Hot items
         </h1>
         <div className="grid grid-cols-1 divide-y divide-gradient-yellow-300">
-          <div>{Order("Shawarma",1250,Order1)}</div>
-          <div>{Order("Hot Dog",950,Order2)}</div>
-          <div>{Order("Sandwiches",450,Order3)}</div>
+          <div>{Order("Shawarma", 1250, Order1)}</div>
+          <div>{Order("Hot Dog", 950, Order2)}</div>
+          <div>{Order("Sandwiches", 450, Order3)}</div>
           <div className="text-center">
             <h1
               style={{
@@ -349,9 +371,10 @@ function OrderMenuSection() {
         </div>
       </div>
       <div className="!-mx-0 mt-4 flex justify-center">
-        <Button 
-        to="/cart"
-        className="m-0 !max-w-full !grow gap-2 !rounded-b-[20px] !rounded-t-[0px] border-none !bg-gradient-to-bl from-gradient-green-400 to-gradient-green-300 text-xs font-semibold uppercase text-black hover:text-black md:text-sm">
+        <Button
+          to="/cart"
+          className="m-0 !max-w-full !grow gap-2 !rounded-b-[20px] !rounded-t-[0px] border-none !bg-gradient-to-bl from-gradient-green-400 to-gradient-green-300 text-xs font-semibold uppercase text-black hover:text-black md:text-sm"
+        >
           <img
             src={Cart}
             alt=""
@@ -400,13 +423,12 @@ function AddressSection() {
 }
 
 // Order Component
-function Order(name:string, price:number,image:string) {
-
+function Order(name: string, price: number, image: string) {
   // const [items, setItems] = useState();
   // const fetchCategories = async () => {
   //   try {
   //     const response = await axios.get(
-  //       "http://localhost:8000/api/get-items/get-item-sales"
+  //       `${BACKEND_BASE_URL}/api/get-items/get-item-sales`
   //     );
   //     if (response.data.data) {
   //       setItems(response.data.data);
@@ -415,7 +437,7 @@ function Order(name:string, price:number,image:string) {
   //     console.log("Error fetching cart data");
   //   } catch (error) {
   //     console.error("Error fetching cart data:", error);
-      
+
   //   }
   // };
 
@@ -429,7 +451,6 @@ function Order(name:string, price:number,image:string) {
   //     category: string;
   //   }) => item.rate > 3.0
   // );
-
 
   return (
     <div className="my-2 flex flex-wrap justify-between gap-3">

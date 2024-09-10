@@ -1,13 +1,15 @@
-import React, { useContext, useState, useEffect } from "react";
-import { useParams, NavLink } from "react-router-dom";
-import { Product, ProviderContext } from "../../components/Provider";
-import { Button } from "../../base-components/Button";
-import MuiRating from "../../components/MuiRating";
-import ReactModal from "react-modal";
-import InputField from "../../base-components/FormElements/InputElement";
 import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import ReactModal from "react-modal";
+import { NavLink, useParams } from "react-router-dom";
+import { Button } from "../../base-components/Button";
+import InputField from "../../base-components/FormElements/InputElement";
+import MuiRating from "../../components/MuiRating";
+import { Product, ProviderContext } from "../../components/Provider";
 
 ReactModal.setAppElement("#root");
+
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
 
 const customStyles = {
   overlay: {
@@ -37,13 +39,12 @@ const ProductDetails: React.FC = () => {
   const [address, setAddress] = useState("");
   const { userId, setUserId } = useContext(ProviderContext);
   const { userAddress, setUserAddress } = useContext(ProviderContext);
-  
-  
+
   const handleAddAddress = async () => {
     setAddressEntered(true);
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/address/addAddress",
+        `${BACKEND_BASE_URL}/api/address/addAddress`,
         {
           address: address,
         }
@@ -64,7 +65,7 @@ const ProductDetails: React.FC = () => {
     const fetchUserAddress = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/address/view/${userId}`
+          `${BACKEND_BASE_URL}/api/address/view/${userId}`
         );
 
         if (response.status === 200) {
@@ -134,7 +135,7 @@ const ProductDetails: React.FC = () => {
       try {
         // Send a request to fetch all users
         const response = await axios.get(
-          "http://localhost:8000/api/user/get-all-users"
+          `${BACKEND_BASE_URL}/api/user/get-all-users`
         );
 
         if (response.status === 200) {
@@ -181,7 +182,7 @@ const ProductDetails: React.FC = () => {
 
   const handleAddToCart = async () => {
     // Send API request to add item to cart
-    const response = await fetch("http://localhost:8000/api/add_cart/cart", {
+    const response = await fetch(`${BACKEND_BASE_URL}/api/add_cart/cart`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -212,30 +213,27 @@ const ProductDetails: React.FC = () => {
     }
   };
 
-  
   //const [isFavorite, setIsFavorite] = useState(false);
 
   const addToFavorites = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/api/favourite/addFavourites', {
-        email: email, // You should replace this with your user's email or user ID
-        productId: selectedProduct?._id, // Replace with the product's ID
-      });
-      console.log("Grand P",selectedProduct?._id)
+      const response = await axios.post(
+        `${BACKEND_BASE_URL}/api/favourite/addFavourites`,
+        {
+          email: email, // You should replace this with your user's email or user ID
+          productId: selectedProduct?._id, // Replace with the product's ID
+        }
+      );
+      console.log("Grand P", selectedProduct?._id);
 
       if (response.status === 201) {
         setIsFavorite(true);
-        alert('Product added to favorites!');
+        alert("Product added to favorites!");
       }
     } catch (error) {
-      console.error('Error adding to favorites:', error);
+      console.error("Error adding to favorites:", error);
     }
   };
-
-  
-
-
-  
 
   if (!selectedProduct) {
     return <div>Product not found.</div>;
@@ -253,19 +251,24 @@ const ProductDetails: React.FC = () => {
         </div>
         <div className="flex  flex-col items-center justify-center ">
           <br />
-          <AddressSection selectedProduct={selectedProduct} isFavorite={isFavorite} addToFavorites={addToFavorites}  />
+          <AddressSection
+            selectedProduct={selectedProduct}
+            isFavorite={isFavorite}
+            addToFavorites={addToFavorites}
+          />
           //? button
           <div className=" m-6 flex h-modal w-4/6 items-center justify-center rounded-3xl !bg-opacity-25 bg-gradient-to-b from-gradient-yellow-100-15 to-gradient-yellow-900-10 p-10 shadow-md">
             <div className="px-6 pb-4 pt-2">
               <div className="flex  ">
-                <div className="justify-arround flex flex-col mr-4">
-                <MuiRating rateValue={selectedProduct.rate} productId={selectedProduct._id} active={true} />
-                
+                <div className="justify-arround mr-4 flex flex-col">
+                  <MuiRating
+                    rateValue={selectedProduct.rate}
+                    productId={selectedProduct._id}
+                    active={true}
+                  />
+                </div>
+                <div className="my-auto"></div>
               </div>
-              <div className="my-auto">
-                  
-                </div>
-                </div>
 
               <br />
               <h1 className="mb-2 !bg-gradient-to-r from-gradient-yellow-500 to-gradient-yellow-900 bg-clip-text font-extrabold !capitalize text-transparent md:text-lg">
@@ -478,12 +481,10 @@ function AddressSection({
   selectedProduct,
   isFavorite,
   addToFavorites,
-  
 }: {
   selectedProduct: Product;
   isFavorite: boolean;
   addToFavorites: () => void;
-  
 }) {
   const email = sessionStorage.email;
 
@@ -507,17 +508,18 @@ function AddressSection({
       </div> */}
       <div className="mt-4 flex justify-center text-center text-base leading-5 tracking-wide">
         <p className="!bg-gradient-to-r from-gradient-yellow-500 to-gradient-yellow-900 bg-clip-text text-xs font-semibold text-transparent md:text-sm">
-          You can add your favourite items to the customized favourite section from here.
+          You can add your favourite items to the customized favourite section
+          from here.
         </p>
       </div>
       <div className="mt-4">
-      <Button 
-         onClick={addToFavorites} 
-        disabled={isFavorite}
-        className="m-0 !rounded-[10px] border-none !bg-gradient-to-b from-gradient-yellow-500 to-gradient-yellow-900 !px-5 !py-2 text-xs font-semibold uppercase text-black hover:text-black md:!px-5 md:py-2 md:text-sm">
-          {isFavorite ? 'Added to Favorites' : 'Add to Favorites'}
+        <Button
+          onClick={addToFavorites}
+          disabled={isFavorite}
+          className="m-0 !rounded-[10px] border-none !bg-gradient-to-b from-gradient-yellow-500 to-gradient-yellow-900 !px-5 !py-2 text-xs font-semibold uppercase text-black hover:text-black md:!px-5 md:py-2 md:text-sm"
+        >
+          {isFavorite ? "Added to Favorites" : "Add to Favorites"}
         </Button>
-        
       </div>
     </div>
   );
