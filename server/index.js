@@ -30,6 +30,10 @@ const PORT = process.env.PORT || 8000;
 // routes
 app.use("/api", allRoutes);
 
+app.get('/', (req, res) => {
+  res.send('Hello, Express!');
+});
+
 app.listen(PORT, () => {
   connectDB();
   console.log(`Server is listening on PORT ${PORT}`);
