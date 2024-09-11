@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import express from "express";
 import morgan from "morgan";
 
+import User from "./models/User.js";
 import allRoutes from "./routes/index.js";
 import { connectDB } from "./utils/dbConnection.js";
 
@@ -13,10 +14,10 @@ dotenv.config();
 // middleware
 
 const corsConfig = {
-    origin: "*", // Allow specific frontend
-    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
-    credentials: true, // Allow credentials if necessary (like cookies)
-  }
+  origin: "*", // Allow specific frontend
+  methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
+  credentials: true, // Allow credentials if necessary (like cookies)
+};
 app.options("", cors(corsConfig));
 app.use(cors(corsConfig));
 app.use(morgan("tiny"));
@@ -29,6 +30,19 @@ const PORT = process.env.PORT || 8000;
 
 // routes
 app.use("/api", allRoutes);
+
+app.get("/", (req, res) => {
+  res.send("Hello, DineEase Server!");
+});
+
+app.get("/test-user", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 app.listen(PORT, () => {
   connectDB();
